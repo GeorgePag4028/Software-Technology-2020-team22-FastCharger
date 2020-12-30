@@ -1,6 +1,8 @@
 /backend/settingsdbconnect.json
 /backend/node_modules
 
+howToPushToGithub.txt
+
 .vscode/*
 !.vscode/settings.json
 !.vscode/tasks.json
