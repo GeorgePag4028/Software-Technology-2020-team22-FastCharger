@@ -3,15 +3,13 @@ const router = express.Router();
 const mysql = require('mysql');
 const db = require('../dbconnect');
 
-
 router.get('/', (req, res) => {
-    let sql = 'CREATE TABLE car(idCar int AUTO_INCREMENT, type varchar(255), brand varchar(255), kilometres float, model varchar(255), releaseYear datetime, usableBatterySize varchar(255), PRIMARY KEY (idCar))';
+    let sql = 'CREATE TABLE station(idStation int AUTO_INCREMENT, country varchar(255),city varchar(255), street varchar(255), number varchar(255), name varchar(255), telephone varchar(255), mail varchar(255), website varchar(255), PRIMARY KEY (idStation))';
     db.query(sql, (err, result) => {
         if (err) throw err;
-        res.send('Table car created...');
+        res.send('Table station created...');
     });
 
 });
-
 //this is to send the router to the app
 module.exports = router;
