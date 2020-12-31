@@ -9,8 +9,11 @@ const app = express();
 //this takes the createdb route and use this when we use /createdb 
 app.use('/createdb',require('./routes/createdb'));
 
-//this adds the table of the users
-app.use('/createUserTable',require('./routes/createUserTable'));
+
+
+
+
+
 
 //this adds the table of the cars
 app.use('/createUserTable',require('./routes/createCarTable'));
