@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const mysql = require('mysql');
-const db = require('../dbconnect');
+const db = require('../../dbconnect');
 
 router.get('/', (req, res) => {
     let sql = 'CREATE TABLE provider(idProvider int AUTO_INCREMENT, pricesOnKwh float,name varchar(255), telephone varchar(255), mail varchar(255), website varchar(255), PRIMARY KEY (idProvider))';
