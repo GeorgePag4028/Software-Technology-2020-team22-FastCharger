@@ -4,10 +4,10 @@ const mysql = require('mysql');
 const db = require('../dbconnect');
 
 router.get('/', (req, res) => {
-    let sql = 'CREATE TABLE user(idUser int AUTO_INCREMENT, rank varchar(255),username varchar(255), password varchar(255), PRIMARY KEY (idUser))';
+    let sql = 'CREATE TABLE car(idCar int AUTO_INCREMENT, type varchar(255),brand varchar(255), kilometres int,model varchar(255), releaseYear datetime, usableBatterySize float, PRIMARY KEY (idCar))';
     db.query(sql, (err, result) => {
         if (err) throw err;
-        res.send('Table user created...');
+        res.send('Table car created...');
     });
 
 });
