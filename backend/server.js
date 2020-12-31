@@ -7,43 +7,44 @@ const app = express();
 
 
 //this takes the createdb route and use this when we use /createdb 
-app.use('/createdb',require('./routes/createdb'));
+app.use('/database/createdb',require('./routes/database/createdb'));
 
-//this adds the table of the cars
-app.use('/createUserTable',require('./routes/createCarTable'));
+//this adds the table of the user
+app.use('/database/createUserTable',require('./routes/database/createUserTable'));
+
+//this adds the table of the car
+app.use('/database/createCarTable',require('./routes/database/createCarTable'));
 
 //this adds the table of the stations
-app.use('/createUserTable',require('./routes/createStationTable'));
+app.use('/database/createStationTable',require('./routes/database/createStationTable'));
 
 //this adds the table of the providers
-app.use('/createUserTable',require('./routes/createProviderTable'));
+app.use('/database/createProviderTable',require('./routes/database/createProviderTable'));
 
 //this adds the table of the chargers
-app.use('/createUserTable',require('./routes/createChargerTable'));
+app.use('/database/createChargerTable',require('./routes/database/createChargerTable'));
 
-//this adds the table of the User
-app.use('/createUserTable',require('./routes/createUserTable'));
 
-//this adds the table of the Car
-app.use('/createCarTable',require('./routes/createCarTable'));
+
+
 
 //this adds the table of the StationHostCharger
-app.use('createStationHostChargerTable',require('./routes/createStationHostChargerTable'));
+app.use('/database/createStationHostChargerTable',require('./routes/database/createStationHostChargerTable'));
 
 //this adds the table of the ProviderSuppliesStation
-app.use('createProviderSuppliesStationTable',require('./routes/createProviderSuppliesStationTable'));
+app.use('/database/createProviderSuppliesStationTable',require('./routes/database/createProviderSuppliesStationTable'));
 
 //this adds the table of the StationOffersDiscountCharger
-app.use('createStationOffersDiscountChargerTable',require('./routes/createStationOffersDiscountChargerTable'));
+app.use('/database/createStationOffersDiscountChargerTable',require('./routes/database/createStationOffersDiscountChargerTable'));
 
 //this adds the table of the Transcations
-app.use('createTranscationsTable', require('./routes/createTranscationsTable'));
+app.use('/database/createTranscationsTable', require('./routes/database/createTranscationsTable'));
 
 //this adds the table of the UserHasCar
-app.use('createUserHasCarTable', require('./routes/createUserHasCarTable'));
+app.use('/database/createUserHasCarTable', require('./routes/database/createUserHasCarTable'));
 
 //this adds the table of the CarChargedTransaction
-app.use('createCarChargedTransactionTable',require('./routes/createCarChargedTransactionTable'));
+app.use('/database/createCarChargedTransactionTable',require('./routes/database/createCarChargedTransactionTable'));
 
 //app.use('/api/members',require('./routes/api/members'));
 const PORT = process.env.PORT || 5000;
