@@ -37,8 +37,8 @@ app.use('/database/createProviderSuppliesStationTable',require('./routes/databas
 //this adds the table of the StationOffersDiscountCharger
 app.use('/database/createStationOffersDiscountChargerTable',require('./routes/database/createStationOffersDiscountChargerTable'));
 
-//this adds the table of the Transcations
-app.use('/database/createTranscationsTable', require('./routes/database/createTranscationsTable'));
+//this adds the table of the Transcation
+app.use('/database/createTranscationTable', require('./routes/database/createTranscationTable'));
 
 //this adds the table of the UserHasCar
 app.use('/database/createUserHasCarTable', require('./routes/database/createUserHasCarTable'));

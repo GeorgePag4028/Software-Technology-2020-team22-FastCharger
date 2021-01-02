@@ -3,9 +3,9 @@ const mysql = require('mysql');
 const router = express.Router();
 const db = require('../../dbconnect');
 
-//Gets all Members
+//Gets all users
 router.get('/getAllUsers', (req, res) => {
-    let sql = 'SELECT *FROM user';
+    let sql = 'SELECT * FROM user';
     let query = db.query(sql, (err, results) => {
         if (err) throw err;
         res.json(results);
