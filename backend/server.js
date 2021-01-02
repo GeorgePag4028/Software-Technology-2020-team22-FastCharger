@@ -46,6 +46,6 @@ app.use('/database/createUserHasCarTable', require('./routes/database/createUser
 //this adds the table of the CarChargedTransaction
 app.use('/database/createCarChargedTransactionTable',require('./routes/database/createCarChargedTransactionTable'));
 
-//app.use('/api/members',require('./routes/api/members'));
+app.use('/api/user',require('./routes/api/user'));
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server started on ${PORT}`));

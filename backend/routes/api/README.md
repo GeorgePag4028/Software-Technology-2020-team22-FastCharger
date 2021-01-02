@@ -1,0 +1,1 @@
+- we have to change router.get => router.post , but i dont know a way to pass the url other than postman || or not if we are ok ,but i think the api should work with post,put,delete
