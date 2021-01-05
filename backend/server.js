@@ -4,6 +4,10 @@ const path = require('path');
 
 const app = express();
 
+//Body Parser Middleware
+app.use(express.json());
+app.use(express.urlencoded({extended: false}));
+
 
 
 //this takes the createdb route and use this when we use /createdb 
@@ -38,7 +42,7 @@ app.use('/database/createProviderSuppliesStationTable',require('./routes/databas
 app.use('/database/createStationOffersDiscountChargerTable',require('./routes/database/createStationOffersDiscountChargerTable'));
 
 //this adds the table of the Transcation
-app.use('/database/createTranscationTable', require('./routes/database/createTranscationTable'));
+app.use('/database/createTransactionTable', require('./routes/database/createTransactionTable'));
 
 //this adds the table of the UserHasCar
 app.use('/database/createUserHasCarTable', require('./routes/database/createUserHasCarTable'));

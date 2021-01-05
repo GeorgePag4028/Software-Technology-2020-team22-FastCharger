@@ -12,21 +12,24 @@ router.get('/getAllUsers', (req, res) => {
     });
 
 });
+
 //Get one user
 router.get('/getUser/:id', (req, res) => {
     let sql = `SELECT * FROM user WHERE idUser =${req.params.id}`;
     let query = db.query(sql, (err, result) => {
         if (err) throw err
+        if (JSON.stringify(result) === '[]') return res.status(400).json({
+            msg: `User with this id ${req.params.id} doesn't exits.`
+        });
         res.json(result);
     });
 
 });
+
 //Create a user
-router.get('/postNewUser', (req, res) => {
+router.post('/postNewUser', (req, res) => {
     const newUser = {
-        rank: 'senior',
-        username: 'Pagonis',
-        password : '1234567'
+        ...req.body
     };
     if (!newUser.username || !newUser.password || !newUser.rank) {
         return res.status(400).json({
@@ -39,23 +42,46 @@ router.get('/postNewUser', (req, res) => {
         res.send('User added ...');
     });
 });
+
 //updateUser
-router.get('/updateUser/:id', (req, res) => {
-    let newUserName = 'Giannis';
-    let sql = `UPDATE user SET username='${newUserName}' WHERE idUser = ${req.params.id}`;
-    let query = db.query(sql, (err, result) => {
-        if (err) throw err;
-        res.send('User updated...');
+router.put('/updateUser/:id', (req, res) => {
+    let sqlTest = `SELECT * FROM user WHERE idUser =${req.params.id}`;
+    let queryTest = db.query(sqlTest, (err, result) => {
+        if (err) throw err
+        else if (JSON.stringify(result) === '[]') return res.status(400).json({
+            msg: `User with this id ${req.params.id} doesn't exits.`
+        });
+        else {
+            const updateUser = {
+                ...req.body
+            };
+
+            let sql = `UPDATE user SET ? WHERE idUser = ${req.params.id}`;
+            let query = db.query(sql, updateUser, (err, result) => {
+                if (err) throw err;
+                res.send('User updated...');
+            });
+        }
     });
 });
+
 //deleteUser
-router.get('/deleteUser/:id',(req,res)=>{
-    let sql = `DELETE FROM user WHERE idUser = ${req.params.id}`;
-    let query = db.query(sql, (err, result) => {
-        if (err) throw err;
-        res.send('User deleted...');
+router.delete('/deleteUser/:id', (req, res) => {
+    let sqlTest = `SELECT * FROM user WHERE idUser =${req.params.id}`;
+    let queryTest = db.query(sqlTest, (err, result) => {
+        if (err) throw err
+        else if (JSON.stringify(result) === '[]') return res.status(400).json({
+            msg: `User with this id ${req.params.id} doesn't exits.`
+        });
+        else {
+            let sql = `DELETE FROM user WHERE idUser = ${req.params.id}`;
+            let query = db.query(sql, (err, result) => {
+                if (err) throw err;
+                res.send('User deleted...');
+            });
+        }
     });
-} );
+});
 
 
 module.exports = router;
