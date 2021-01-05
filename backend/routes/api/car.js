@@ -14,25 +14,25 @@ router.get('/getAllCars', (req, res) => {
 });
 //Get one car
 router.get('/getCar/:id', (req, res) => {
+
     let sql = `SELECT * FROM car WHERE idCar =${req.params.id}`;
     let query = db.query(sql, (err, result) => {
         if (err) throw err
+        if (JSON.stringify(result) === '[]') return res.status(400).json({
+            msg: `Car with this id ${req.params.id} doesn't exits.`
+        });
         res.json(result);
     });
 
+
 });
 //Create a car
-router.get('/postNewCar', (req, res) => {
+router.post('/postNewCar', (req, res) => {
     const newCar = {
-        type: 'Coupe',
-        brand: 'M4',
-        kilometres : '5000',
-        model: 'X5',
-        releaseYear : '2019-11-11 13:23:44',
-        usableBatterySize : '97kWh'
-        
+        ...req.body
+
     };
-    if (!newCar.type || !newCar.brand || !newCar.kilometres||!newCar.model ||!newCar.releaseYear ||!newCar.usableBatterySize ) {
+    if (!newCar.type || !newCar.brand || !newCar.kilometres || !newCar.model || !newCar.releaseYear || !newCar.usableBatterySize) {
         return res.status(400).json({
             msg: 'Please include a type,brand,and kilometres,model,releaseYear,usableBatterySize'
         });
@@ -44,22 +44,45 @@ router.get('/postNewCar', (req, res) => {
     });
 });
 //updateCar
-router.get('/updateCar/:id', (req, res) => {
-    let newCarKilometres = '6000';
-    let sql = `UPDATE car SET kilometres='${newCarKilometres}' WHERE idCar = ${req.params.id}`;
-    let query = db.query(sql, (err, result) => {
-        if (err) throw err;
-        res.send('Car updated...');
+router.put('/updateCar/:id', (req, res) => {
+    let sqlTest = `SELECT * FROM car WHERE idCar =${req.params.id}`;
+    let queryTest = db.query(sqlTest, (err, result) => {
+        if (err) throw err
+        else if (JSON.stringify(result) === '[]') return res.status(400).json({
+            msg: `User with this id ${req.params.id} doesn't exits.`
+        });
+        else {
+            const updateCar = {
+                ...req.body
+            };
+            let sql = `UPDATE car SET ? WHERE idCar = ${req.params.id}`;
+            let query = db.query(sql, (err, result) => {
+                if (err) throw err;
+                res.send('Car updated...');
+            });
+
+        }
+
+
     });
 });
 //deleteCar
-router.get('/deleteCar/:id',(req,res)=>{
-    let sql = `DELETE FROM car WHERE idCar = ${req.params.id}`;
-    let query = db.query(sql, (err, result) => {
-        if (err) throw err;
-        res.send('Car deleted...');
+router.delete('/deleteCar/:id', (req, res) => {
+    let sqlTest = `SELECT * FROM car WHERE idCar =${req.params.id}`;
+    let queryTest = db.query(sqlTest, (err, result) => {
+        if (err) throw err
+        else if (JSON.stringify(result) === '[]') return res.status(400).json({
+            msg: `Car with this id ${req.params.id} doesn't exits.`
+        });
+        else {
+            let sql = `DELETE FROM car WHERE idCar = ${req.params.id}`;
+            let query = db.query(sql, (err, result) => {
+                if (err) throw err;
+                res.send('Car deleted...');
+            });
+        }
     });
-} );
+});
 
 
 module.exports = router;
