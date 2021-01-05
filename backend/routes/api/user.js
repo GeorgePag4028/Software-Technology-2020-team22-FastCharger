@@ -19,7 +19,7 @@ router.get('/getUser/:id', (req, res) => {
     let query = db.query(sql, (err, result) => {
         if (err) throw err
         if (JSON.stringify(result) === '[]') return res.status(400).json({
-            msg: `User with this id ${req.params.id} doesn't exits.`
+            msg: `User with this id ${req.params.id} doesn't exist.`
         });
         res.json(result);
     });
@@ -31,9 +31,9 @@ router.post('/postNewUser', (req, res) => {
     const newUser = {
         ...req.body
     };
-    if (!newUser.username || !newUser.password || !newUser.rank) {
+    if (!newUser.username || !newUser.password || !newUser.rank || !newUser.email) {
         return res.status(400).json({
-            msg: 'Please include a username,password,and rank'
+            msg: 'Please include a username, password, rank and email'
         });
     }
     let sql = 'INSERT INTO user SET ?';
@@ -49,7 +49,7 @@ router.put('/updateUser/:id', (req, res) => {
     let queryTest = db.query(sqlTest, (err, result) => {
         if (err) throw err
         else if (JSON.stringify(result) === '[]') return res.status(400).json({
-            msg: `User with this id ${req.params.id} doesn't exits.`
+            msg: `User with this id ${req.params.id} doesn't exist.`
         });
         else {
             const updateUser = {
@@ -71,7 +71,7 @@ router.delete('/deleteUser/:id', (req, res) => {
     let queryTest = db.query(sqlTest, (err, result) => {
         if (err) throw err
         else if (JSON.stringify(result) === '[]') return res.status(400).json({
-            msg: `User with this id ${req.params.id} doesn't exits.`
+            msg: `User with this id ${req.params.id} doesn't exist.`
         });
         else {
             let sql = `DELETE FROM user WHERE idUser = ${req.params.id}`;

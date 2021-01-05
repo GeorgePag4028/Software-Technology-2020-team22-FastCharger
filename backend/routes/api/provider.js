@@ -19,7 +19,7 @@ router.get('/getProvider/:id', (req, res) => {
     let query = db.query(sql, (err, result) => {
         if (err) throw err
         if (JSON.stringify(result) === '[]') return res.status(400).json({
-            msg: `Provider with this id ${req.params.id} doesn't exits.`
+            msg: `Provider with this id ${req.params.id} doesn't exist.`
         });
         res.json(result);
     });
@@ -47,7 +47,7 @@ router.put('/updateProvider/:id', (req, res) => {
     let queryTest = db.query(sqlTest, (err, result) => {
         if (err) throw err
         else if (JSON.stringify(result) === '[]') return res.status(400).json({
-            msg: `Provider with this id ${req.params.id} doesn't exits.`
+            msg: `Provider with this id ${req.params.id} doesn't exist.`
         });
         else {
             const updateProvider = {
@@ -68,7 +68,7 @@ router.delete('/deleteProvider/:id', (req, res) => {
     let queryTest = db.query(sqlTest, (err, result) => {
         if (err) throw err
         else if (JSON.stringify(result) === '[]') return res.status(400).json({
-            msg: `Provider with this id ${req.params.id} doesn't exits.`
+            msg: `Provider with this id ${req.params.id} doesn't exist.`
         });
         else {
             let sql = `DELETE FROM provider WHERE idProvider = ${req.params.id}`;

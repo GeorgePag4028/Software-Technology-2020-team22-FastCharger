@@ -12,6 +12,7 @@ router.get('/getAllCarChargedTransactions', (req, res) => {
     });
 
 });
+
 //Get one carChargedTransaction
 router.get('/getCarChargedTransaction/:id', (req, res) => {
     let sql = `SELECT * FROM carChargedTransaction WHERE idCarChargedTransaction =${req.params.id}`;
@@ -21,45 +22,63 @@ router.get('/getCarChargedTransaction/:id', (req, res) => {
     });
 
 });
+
 //Create a carChargedTransaction
 router.post('/postNewCarChargedTransaction', (req, res) => {
     const newCarChargedTransaction = {
         ...req.body
     };
-    /*if (!newCarChargedTransaction.idTransaction || !newCarChargedTransaction.idCar || !newCarChargedTransaction.presentageBatteryStart || !newCarChargedTransaction.presentageBatteryFinish || !newCarChargedTransaction.durationInMin) {
+    if (!newCarChargedTransaction.idTransaction || !newCarChargedTransaction.idCar || !newCarChargedTransaction.percentageBatteryStart || !newCarChargedTransaction.percentageBatteryFinish || !newCarChargedTransaction.durationInMin) {
         return res.status(400).json({
-            msg: 'Please include a idTransaction, idCar, presentageBatteryStart, presentageBatteryFinish, durationInMin'
+            msg: 'Please include a idTransaction, idCar, percentageBatteryStart, percentageBatteryFinish, durationInMin'
         });
-    }*/
+    }
     let sql = 'INSERT INTO carChargedTransaction SET ?';
     let query = db.query(sql, req.body, (err, result) => {
         if (err) throw err;
         res.send('CarChargedTransaction added ...');
     });
 });
+
 //updateCarChargedTransaction
 router.put('/updateCarChargedTransaction/:id', (req, res) => {
+    let sqlTest = `SELECT * FROM carChargedTransaction WHERE idCarChargedTransaction =${req.params.id}`;
+    let queryTest = db.query(sqlTest, (err, result) => {
+        if (err) throw err
+        else if (JSON.stringify(result) === '[]') return res.status(400).json({
+            msg: `CarChargedTransaction with this id ${req.params.id} doesn't exist.`
+        });
+        else {
+            const updateCarChargedTransaction = {
+                ...req.body
+            };
 
-    const newCarChargedTransaction = {
-        ...req.body
-    }; 
-    let sql = `UPDATE carChargedTransaction SET idTransaction =?, idCar =? ,presentageBatteryStart=?,presentageBatteryFinish=?,durationInMin=? WHERE idCarChargedTransaction =${req.params.id} `;
-    
-
-   
-    let query = db.query(sql,newcarChargedTransaction, (err, result) => {
-        if (err) throw err;
-        res.send('CarChargedTransaction updated...');
+            let sql = `UPDATE carChargedTransaction SET ? WHERE idCarChargedTransaction = ${req.params.id}`;
+            let query = db.query(sql, updateCarChargedTransaction, (err, result) => {
+                if (err) throw err;
+                res.send('CarChargedTransaction updated...');
+            });
+        }
     });
 });
+
 //deleteCarChargedTransaction
 router.delete('/deleteCarChargedTransaction/:id',(req,res)=>{
-    let sql = `DELETE FROM carChargedTransaction WHERE idCarChargedTransaction = ${req.params.id}`;
-    let query = db.query(sql, (err, result) => {
-        if (err) throw err;
-        res.send('CarChargedTransaction deleted...');
+    let sqlTest = `SELECT * FROM carChargedTransaction WHERE idCarChargedTransaction =${req.params.id}`;
+    let queryTest = db.query(sqlTest, (err, result) => {
+        if (err) throw err
+        else if (JSON.stringify(result) === '[]') return res.status(400).json({
+            msg: `CarChargedTransaction with this id ${req.params.id} doesn't exist.`
+        });
+        else {
+            let sql = `DELETE FROM carChargedTransaction WHERE idCarChargedTransaction = ${req.params.id}`;
+            let query = db.query(sql, (err, result) => {
+                if (err) throw err;
+                res.send('CarChargedTransaction deleted...');
+            });
+        }
     });
-} );
+});
 
 
 module.exports = router;

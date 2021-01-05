@@ -5,7 +5,7 @@ const db = require('../../dbconnect');
 
 //Gets all Station
 router.get('/getAllStations', (req, res) => {
-    let sql = 'SELECT *FROM station';
+    let sql = 'SELECT * FROM station';
     let query = db.query(sql, (err, results) => {
         if (err) throw err;
         res.json(results);
@@ -18,7 +18,7 @@ router.get('/getStation/:id', (req, res) => {
     let query = db.query(sql, (err, result) => {
         if (err) throw err
         if (JSON.stringify(result) === '[]') return res.status(400).json({
-            msg: `Station with this id ${req.params.id} doesn't exits.`
+            msg: `Station with this id ${req.params.id} doesn't exist.`
         });
         res.json(result);
     });
@@ -29,9 +29,9 @@ router.post('/postNewStation', (req, res) => {
     const newStation = {
         ...req.body
     };
-    if (!newStation.country || !newStation.city || !newStation.street || !newStation.number || !newStation.name || !newStation.telephone || !newStation.mail || !newStation.website) {
+    if (!newStation.country || !newStation.city || !newStation.street || !newStation.number || !newStation.name || !newStation.telephone || !newStation.email || !newStation.website) {
         return res.status(400).json({
-            msg: 'Please include a country,city,street,number,name,telephone,mail,website'
+            msg: 'Please include a country,city,street,number,name,telephone,email,website'
         });
     }
     let sql = 'INSERT INTO station SET ?';
@@ -46,7 +46,7 @@ router.put('/updateStation/:id', (req, res) => {
     let queryTest = db.query(sqlTest, (err, result) => {
         if (err) throw err
         else if (JSON.stringify(result) === '[]') return res.status(400).json({
-            msg: `Station with this id ${req.params.id} doesn't exits.`
+            msg: `Station with this id ${req.params.id} doesn't exist.`
         });
         else {
             const updateUser = {
@@ -67,7 +67,7 @@ router.delete('/deleteStation/:id', (req, res) => {
     let queryTest = db.query(sqlTest, (err, result) => {
         if (err) throw err
         else if (JSON.stringify(result) === '[]') return res.status(400).json({
-            msg: `Station with this id ${req.params.id} doesn't exits.`
+            msg: `Station with this id ${req.params.id} doesn't exist.`
         });
         else {
             let sql = `DELETE FROM station WHERE idStation = ${req.params.id}`;

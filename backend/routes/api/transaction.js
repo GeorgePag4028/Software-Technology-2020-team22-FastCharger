@@ -34,7 +34,7 @@ router.get('/postNewTransaction', (req, res) => {
     };
     if (!newTransaction.idUser || !newTransaction.idCharger || !newTransaction.paymentMethod || !newTransaction.amount || !newTransaction.isInOffers || !newTransaction.time||!newTransaction.idStation) {
         return res.status(400).json({
-            msg: 'Please include a idUser, idCharger, paymentMethod, isInOffers, time,idStation'
+            msg: 'Please include a idUser, idCharger, idStation, paymentMethod, isInOffers, and time'
         });
     }
     let sql = 'INSERT INTO transaction SET ?';

@@ -18,7 +18,7 @@ router.get('/getCharger/:id', (req, res) => {
     let query = db.query(sql, (err, result) => {
         if (err) throw err
         if (JSON.stringify(result) === '[]') return res.status(400).json({
-            msg: `Charger with this id ${req.params.id} doesn't exits.`
+            msg: `Charger with this id ${req.params.id} doesn't exist.`
         });
         res.json(result);
     });
@@ -46,7 +46,7 @@ router.put('/updateCharger/:id', (req, res) => {
     let queryTest = db.query(sqlTest, (err, result) => {
         if (err) throw err
         else if (JSON.stringify(result) === '[]') return res.status(400).json({
-            msg: `Charger with this id ${req.params.id} doesn't exits.`
+            msg: `Charger with this id ${req.params.id} doesn't exist.`
         });
         else {
             const updateCharger = {
@@ -67,7 +67,7 @@ router.delete('/deleteCharger/:id', (req, res) => {
     let queryTest = db.query(sqlTest, (err, result) => {
         if (err) throw err
         else if (JSON.stringify(result) === '[]') return res.status(400).json({
-            msg: `Charger with this id ${req.params.id} doesn't exits.`
+            msg: `Charger with this id ${req.params.id} doesn't exist.`
         });
         else {
             let sql = `DELETE FROM charger WHERE idCharger = ${req.params.id}`;
