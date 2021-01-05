@@ -24,7 +24,7 @@ router.get('/getUserHasCar/:id', (req, res) => {
 //Create a userHasCar
 router.get('/postNewUserHasCar', (req, res) => {
     const newUserHasCar = {
-        idUser: '1',
+        idUser: '2',
         idCar: '1'
     };
     if (!newUserHasCar.idUser || !newUserHasCar.idCar) {

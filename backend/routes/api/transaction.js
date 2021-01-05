@@ -24,20 +24,21 @@ router.get('/getTransaction/:id', (req, res) => {
 //Create a transaction
 router.get('/postNewTransaction', (req, res) => {
     const newTransaction = {
-        idUser: '1',
+        idUser: '2',
         idCharger: '1',
+        idStation : '1',
         paymentMethod: 'cash',
         amount: '50.01',
         isInOffers : '0',
         time : '2021-01-01 15:00:00'
     };
-    if (!newTransaction.idUser || !newTransaction.idCharger || !newTransaction.paymentMethod || !newTransaction.amount || !newTransaction.isInOffers || !newTransaction.time) {
+    if (!newTransaction.idUser || !newTransaction.idCharger || !newTransaction.paymentMethod || !newTransaction.amount || !newTransaction.isInOffers || !newTransaction.time||!newTransaction.idStation) {
         return res.status(400).json({
-            msg: 'Please include a idUser, idCharger, paymentMethod, isInOffers, time'
+            msg: 'Please include a idUser, idCharger, paymentMethod, isInOffers, time,idStation'
         });
     }
     let sql = 'INSERT INTO transaction SET ?';
-    let query = db.query(sql, newUser, (err, result) => {
+    let query = db.query(sql, newTransaction, (err, result) => {
         if (err) throw err;
         res.send('Transaction added ...');
     });

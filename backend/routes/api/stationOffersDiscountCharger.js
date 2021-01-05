@@ -34,7 +34,7 @@ router.get('/postNewStationOffersDiscountCharger', (req, res) => {
         });
     }
     let sql = 'INSERT INTO stationOffersDiscountCharger SET ?';
-    let query = db.query(sql, newUser, (err, result) => {
+    let query = db.query(sql, newStationOffersDiscountCharger, (err, result) => {
         if (err) throw err;
         res.send('StationOffersDiscountCharger added ...');
     });

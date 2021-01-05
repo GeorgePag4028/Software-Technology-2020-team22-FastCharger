@@ -51,6 +51,13 @@ app.use('/api/car',require('./routes/api/car'));
 app.use('/api/provider',require('./routes/api/provider'));
 app.use('/api/station',require('./routes/api/station'));
 app.use('/api/charger',require('./routes/api/charger'));
+app.use('/api/stationHostCharger',require('./routes/api/stationHostCharger'));
+app.use('/api/providerSuppliesStation',require('./routes/api/providerSuppliesStation'));
+app.use('/api/stationOffersDiscountCharger',require('./routes/api/stationOffersDiscountCharger'));
+app.use('/api/transaction',require('./routes/api/transaction'));
+app.use('/api/userHasCar',require('./routes/api/userHasCar'));
+app.use('/api/carChargedTransaction',require('./routes/api/carChargedTransaction'));
+
 
 
 const PORT = process.env.PORT || 5000;

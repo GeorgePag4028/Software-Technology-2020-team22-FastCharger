@@ -30,13 +30,13 @@ router.get('/postNewCarChargedTransaction', (req, res) => {
         presentageBatteryFinish : '95.1',
         durationInMin : '60.1'
     };
-    if (!newCarChargedTransaction.idTransaction || !newCarChargedTransaction.idCar || !newCarChargedTransaction.presentageBatteryStart || newCarChargedTransaction.presentageBatteryFinish || newCarChargedTransaction.durationInMin) {
+    if (!newCarChargedTransaction.idTransaction || !newCarChargedTransaction.idCar || !newCarChargedTransaction.presentageBatteryStart || !newCarChargedTransaction.presentageBatteryFinish || !newCarChargedTransaction.durationInMin) {
         return res.status(400).json({
             msg: 'Please include a idTransaction, idCar, presentageBatteryStart, presentageBatteryFinish, durationInMin'
         });
     }
     let sql = 'INSERT INTO carChargedTransaction SET ?';
-    let query = db.query(sql, newUser, (err, result) => {
+    let query = db.query(sql, newCarChargedTransaction, (err, result) => {
         if (err) throw err;
         res.send('CarChargedTransaction added ...');
     });

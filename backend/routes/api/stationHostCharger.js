@@ -14,7 +14,7 @@ router.get('/getAllStationHostChargers', (req, res) => {
 });
 //Get one stationHostCharger
 router.get('/getStationHostCharger/:id', (req, res) => {
-    let sql = `SELECT * FROM user WHERE idStation =${req.params.id}`;
+    let sql = `SELECT * FROM stationHostCharger WHERE idStationHostCharger =${req.params.id}`;
     let query = db.query(sql, (err, result) => {
         if (err) throw err
         res.json(result);
@@ -22,7 +22,7 @@ router.get('/getStationHostCharger/:id', (req, res) => {
 
 });
 //Create a stationHostCharger
-router.get('/postNewUser', (req, res) => {
+router.get('/postNewStationHostCharger', (req, res) => {
     const newStationHostCharger = {
         idStation : '1',
         idCharger : '1'
@@ -49,7 +49,7 @@ router.get('/updateStationHostCharger/:id', (req, res) => {
 });
 //deleteStationHostCharger
 router.get('/deleteStationHostCharger/:id',(req,res)=>{
-    let sql = `DELETE FROM stationHostCharger WHERE idStation = ${req.params.id}`;
+    let sql = `DELETE FROM stationHostCharger WHERE idStationHostCharger = ${req.params.id}`;
     let query = db.query(sql, (err, result) => {
         if (err) throw err;
         res.send('StationHostCharger deleted...');

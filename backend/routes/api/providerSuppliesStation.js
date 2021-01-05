@@ -24,8 +24,8 @@ router.get('/getProviderSuppliesStation/:id', (req, res) => {
 //Create a providerSuppliesStation
 router.get('/postNewProviderSuppliesStation', (req, res) => {
     const newProviderSuppliesStation = {
-        idStation = '1',
-        idProvider = '1'
+        idStation : '1',
+        idProvider : '2'
     };
     if (!newProviderSuppliesStation.idStation || !newProviderSuppliesStation.idProvider) {
         return res.status(400).json({
