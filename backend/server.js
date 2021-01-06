@@ -1,7 +1,8 @@
 const express = require('express');
 const mysql = require('mysql');
 const path = require('path');
-
+const fs =require('fs');
+const https =require('https');
 const app = express();
 
 //Body Parser Middleware
@@ -65,4 +66,4 @@ app.use('/api/carChargedTransaction',require('./routes/api/carChargedTransaction
 
 
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`Server started on ${PORT}`));
+https.createServer({key:fs.readFileSync('server.key'),cert:fs.readFileSync('server.cert')},app).listen(PORT, () => console.log(`Server started on ${PORT}`));
