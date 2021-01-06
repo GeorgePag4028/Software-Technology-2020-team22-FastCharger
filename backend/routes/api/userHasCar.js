@@ -12,20 +12,24 @@ router.get('/getAllUserHasCars', (req, res) => {
     });
 
 });
+
 //Get one userHasCar
 router.get('/getUserHasCar/:id', (req, res) => {
     let sql = `SELECT * FROM userHasCar WHERE idUserHasCar =${req.params.id}`;
     let query = db.query(sql, (err, result) => {
         if (err) throw err
+        if (JSON.stringify(result) === '[]') return res.status(400).json({
+            msg: `UserHasCar~~ with this id ${req.params.id} doesn't exist.`
+        });
         res.json(result);
     });
 
 });
+
 //Create a userHasCar
-router.get('/postNewUserHasCar', (req, res) => {
+router.post('/postNewUserHasCar', (req, res) => {
     const newUserHasCar = {
-        idUser: '2',
-        idCar: '1'
+        ...req.body
     };
     if (!newUserHasCar.idUser || !newUserHasCar.idCar) {
         return res.status(400).json({
@@ -38,23 +42,46 @@ router.get('/postNewUserHasCar', (req, res) => {
         res.send('UserHasCar added ...');
     });
 });
+
 //updateUserHasCar
-router.get('/updateUserHasCar/:id', (req, res) => {
-    let newIdUser = '2';
-    let sql = `UPDATE userHasCar SET idUser='${newIdUser}' WHERE idUserHasCar = ${req.params.id}`;
-    let query = db.query(sql, (err, result) => {
-        if (err) throw err;
-        res.send('UserHasCar updated...');
+router.put('/updateUserHasCar/:id', (req, res) => {
+    let sqlTest = `SELECT * FROM userHasCar WHERE idUserHasCar =${req.params.id}`;
+    let queryTest = db.query(sqlTest, (err, result) => {
+        if (err) throw err
+        else if (JSON.stringify(result) === '[]') return res.status(400).json({
+            msg: `UserHasCar with this id ${req.params.id} doesn't exist.`
+        });
+        else {
+            const updateUserHasCar = {
+                ...req.body
+            };
+
+            let sql = `UPDATE userHasCar SET ? WHERE idUserHasCar = ${req.params.id}`;
+            let query = db.query(sql, updateUserHasCar, (err, result) => {
+                if (err) throw err;
+                res.send('UserHasCar updated...');
+            });
+        }
     });
 });
+
 //deleteUserHasCar
-router.get('/deleteUserHasCar/:id',(req,res)=>{
-    let sql = `DELETE FROM userHasCar WHERE idUserHasCar = ${req.params.id}`;
-    let query = db.query(sql, (err, result) => {
-        if (err) throw err;
-        res.send('UserHasCar deleted...');
+router.delete('/deleteUserHasCar/:id',(req,res)=>{
+    let sqlTest = `SELECT * FROM userHasCar WHERE idUserHasCar =${req.params.id}`;
+    let queryTest = db.query(sqlTest, (err, result) => {
+        if (err) throw err
+        else if (JSON.stringify(result) === '[]') return res.status(400).json({
+            msg: `UserHasCar with this id ${req.params.id} doesn't exist.`
+        });
+        else {
+            let sql = `DELETE FROM userHasCar WHERE idUserHasCar = ${req.params.id}`;
+            let query = db.query(sql, (err, result) => {
+                if (err) throw err;
+                res.send('UserHasCar deleted...');
+            });
+        }
     });
-} );
+});;
 
 
 module.exports = router;

@@ -5,7 +5,7 @@ const db = require('../../dbconnect');
 
 //Gets all car
 router.get('/getAllCars', (req, res) => {
-    let sql = 'SELECT *FROM car';
+    let sql = 'SELECT * FROM car';
     let query = db.query(sql, (err, results) => {
         if (err) throw err;
         res.json(results);
@@ -19,7 +19,7 @@ router.get('/getCar/:id', (req, res) => {
     let query = db.query(sql, (err, result) => {
         if (err) throw err
         if (JSON.stringify(result) === '[]') return res.status(400).json({
-            msg: `Car with this id ${req.params.id} doesn't exits.`
+            msg: `Car with this id ${req.params.id} doesn't exist.`
         });
         res.json(result);
     });
@@ -49,7 +49,7 @@ router.put('/updateCar/:id', (req, res) => {
     let queryTest = db.query(sqlTest, (err, result) => {
         if (err) throw err
         else if (JSON.stringify(result) === '[]') return res.status(400).json({
-            msg: `User with this id ${req.params.id} doesn't exits.`
+            msg: `User with this id ${req.params.id} doesn't exist.`
         });
         else {
             const updateCar = {

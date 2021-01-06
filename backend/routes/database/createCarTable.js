@@ -5,7 +5,7 @@ const db = require('../../dbconnect');
 
 
 router.get('/', (req, res) => {
-    let sql = 'CREATE TABLE car(idCar int AUTO_INCREMENT, type varchar(255), brand varchar(255), kilometres float, model varchar(255), releaseYear datetime, usableBatterySize varchar(255), PRIMARY KEY (idCar))';
+    let sql = 'CREATE TABLE car(idCar int AUTO_INCREMENT, type varchar(255), brand varchar(255), kilometres float, model varchar(255), releaseYear year, usableBatterySize varchar(255), PRIMARY KEY (idCar))';
     db.query(sql, (err, result) => {
         if (err) throw err;
         res.send('Table car created...');

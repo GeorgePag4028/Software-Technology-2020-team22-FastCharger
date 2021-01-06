@@ -12,20 +12,24 @@ router.get('/getAllStationHostChargers', (req, res) => {
     });
 
 });
+
 //Get one stationHostCharger
 router.get('/getStationHostCharger/:id', (req, res) => {
     let sql = `SELECT * FROM stationHostCharger WHERE idStationHostCharger =${req.params.id}`;
     let query = db.query(sql, (err, result) => {
         if (err) throw err
+        if (JSON.stringify(result) === '[]') return res.status(400).json({
+            msg: `StationHostCharger with this id ${req.params.id} doesn't exist.`
+        });
         res.json(result);
     });
 
 });
+
 //Create a stationHostCharger
-router.get('/postNewStationHostCharger', (req, res) => {
+router.post('/postNewStationHostCharger', (req, res) => {
     const newStationHostCharger = {
-        idStation : '1',
-        idCharger : '1'
+        ...req.body
     };
     if (!newStationHostCharger.idStation || !newStationHostCharger.idCharger) {
         return res.status(400).json({
@@ -38,23 +42,47 @@ router.get('/postNewStationHostCharger', (req, res) => {
         res.send('StationHostCharger added ...');
     });
 });
+
 //updateStationHostCharger
-router.get('/updateStationHostCharger/:id', (req, res) => {
-    let newIdStation = '2';
-    let sql = `UPDATE stationHostCharger SET idStation='${newIdStation}' WHERE idStationHostCharger = ${req.params.id}`;
-    let query = db.query(sql, (err, result) => {
-        if (err) throw err;
-        res.send('StationHostCharger updated...');
+router.put('/updateStationHostCharger/:id', (req, res) => {
+    let sqlTest = `SELECT * FROM stationHostCharger where idStationHostCharger =${req.params.id}`;
+    let queryTest = db.query(sqlTest, (err, result) => {
+        if (err) throw err
+        else if (JSON.stringify(result) === '[]') return res.status(400).json({
+            msg: `StationHostCharger with this id ${req.params.id} doesn't exist.`
+        });
+        else {
+            const updateStationHostCharger = {
+                ...req.body
+            };
+
+            let sql = `UPDATE stationHostCharger SET ? WHERE idStationHostCharger = ${req.params.id}`;
+            let query = db.query(sql, updateStationHostCharger, (err, result) => {
+                if (err) throw err;
+                res.send('StationHostCharger updated...');
+            });
+        }
     });
 });
+
+
 //deleteStationHostCharger
-router.get('/deleteStationHostCharger/:id',(req,res)=>{
-    let sql = `DELETE FROM stationHostCharger WHERE idStationHostCharger = ${req.params.id}`;
-    let query = db.query(sql, (err, result) => {
-        if (err) throw err;
-        res.send('StationHostCharger deleted...');
+router.delete('/deleteStationHostCharger/:id',(req,res)=>{
+    let sqlTest = `DELETE FROM stationHostCharger WHERE idStationHostCharger = ${req.params.id}`;
+    let queryTest = db.query(sqlTest, (err, result) => {
+        if (err) throw err
+        else if (JSON.stringify(result) === '[]') return res.status(400).json({
+            msg: `StationHostCharger with this id ${req.params.id} doesn't exist.`
+        });
+        else {
+            let sql = `DELETE FROM stationHostCharger WHERE idStationHostCharger = ${req.params.id}`;
+            let query = db.query(sql, (err, result) => {
+                if (err) throw err;
+                res.send('StationHostCharger deleted...');
+            });
+        }
     });
-} );
+});
 
 
 module.exports = router;
