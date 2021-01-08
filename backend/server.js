@@ -51,6 +51,7 @@ app.use('/database/createUserHasCarTable', require('./routes/database/createUser
 //this adds the table of the CarChargedTransaction
 app.use('/database/createCarChargedTransactionTable',require('./routes/database/createCarChargedTransactionTable'));
 
+//all api endpoints 
 app.use('/api/user',require('./routes/api/user'));
 app.use('/api/car',require('./routes/api/car'));
 app.use('/api/provider',require('./routes/api/provider'));
