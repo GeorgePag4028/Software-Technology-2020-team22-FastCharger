@@ -21,6 +21,14 @@ Every entrypoint off the entities (change whatYouWantToShow to a entity )
 - Create POST https://104.248.134.250:5000/api/whatYouWant
 - Update PUT https://104.248.134.250:5000/api/whatYouWant/id
 - Delete DELETE https://104.248.134.250:5000/api/whatYouWant/id
+## Usage of the application
+- Get the values for Charger,Car,Provider,Station
+GET  https://104.248.134.250:5000/usage/sessionsPerCharger/:id/:from/:to
+GET  https://104.248.134.250:5000/usage/sessionsPerCar/:id/:from/:to
+GET  https://104.248.134.250:5000/usage/sessionsPerProvider/:id/:from/:to
+GET  https://104.248.134.250:5000/usage/sessionsPerStation/:id/:from/:to
+
+
 
 
 

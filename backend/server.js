@@ -64,6 +64,12 @@ app.use('/api/transaction',require('./routes/api/transaction'));
 app.use('/api/userHasCar',require('./routes/api/userHasCar'));
 app.use('/api/carChargedTransaction',require('./routes/api/carChargedTransaction'));
 
+//add usage to the application
+app.use('/usage/sessionPerCharger',require('./routes/usage/sessionPerCharger'));
+app.use('/usage/sessionPerProvider',require('./routes/usage/sessionPerProvider'));
+app.use('/usage/sessionPerCar',require('./routes/usage/sessionPerCar'));
+app.use('/usage/sessionPerStation',require('./routes/usage/sessionPerStation'));
+
 
 
 const PORT = process.env.PORT || 5000;

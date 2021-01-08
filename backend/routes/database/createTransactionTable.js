@@ -4,7 +4,7 @@ const mysql = require('mysql');
 const db = require('../../dbconnect');
 
 router.get('/', (req, res) => {
-    let sql = 'CREATE TABLE transaction(idTransaction int AUTO_INCREMENT, idUser int, idCharger int ,idStation int,paymentMethod varchar(255),amount float,isInOffers bool,time datetime, PRIMARY KEY (idTransaction),FOREIGN KEY (idStation) REFERENCES station(idStation),FOREIGN KEY (idCharger) REFERENCES charger(idCharger),FOREIGN KEY (idUser) REFERENCES user(idUser))';
+    let sql = 'CREATE TABLE transaction(idTransaction int AUTO_INCREMENT, idUser int, idCharger int ,idStation int,paymentMethod varchar(255),amount float,isInOffers bool,time datetime, PRIMARY KEY (idTransaction),FOREIGN KEY (idStation) REFERENCES station(idStation) ON DELETE CASCADE,FOREIGN KEY (idCharger) REFERENCES charger(idCharger) ON DELETE CASCADE,FOREIGN KEY (idUser) REFERENCES user(idUser) ON DELETE CASCADE)';
     db.query(sql, (err, result) => {
         if (err) throw err;
         res.send('Table transaction created...');
