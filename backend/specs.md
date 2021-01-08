@@ -2,17 +2,17 @@
 # Rest Api for Car Charging application
 
 ## Entities:
-- User
-- Car
-- Station 
-- Provider
-- Charger
-- StationHostCharger(id_charger,id_station)
-- ProviderSuppliesStation(id_station,id_provider)
-- StationOffersDiscountCharger(id_charger,id_station)
-- Transcation(id_user,id_charger,id_station)
-- UserHasCar(id_user,id_car)
-- CarChargedTransaction(id_car,id_transaction)
+- user
+- car
+- station 
+- provider
+- charger
+- stationHostCharger(id_charger,id_station)
+- providerSuppliesStation(id_station,id_provider)
+- stationOffersDiscountCharger(id_charger,id_station)
+- transcation(id_user,id_charger,id_station)
+- userHasCar(id_user,id_car)
+- carChargedTransaction(id_car,id_transaction)
 
 ## Entrypoint
 Every entrypoint off the entities (change whatYouWantToShow to a entity )
@@ -21,13 +21,14 @@ Every entrypoint off the entities (change whatYouWantToShow to a entity )
 - Create POST https://104.248.134.250:5000/api/whatYouWant
 - Update PUT https://104.248.134.250:5000/api/whatYouWant/id
 - Delete DELETE https://104.248.134.250:5000/api/whatYouWant/id
-
 ## Usage of the application
 - Get the values for Charger,Car,Provider,Station
 GET  https://104.248.134.250:5000/usage/sessionsPerCharger/:id/:from/:to
 GET  https://104.248.134.250:5000/usage/sessionsPerCar/:id/:from/:to
 GET  https://104.248.134.250:5000/usage/sessionsPerProvider/:id/:from/:to
 GET  https://104.248.134.250:5000/usage/sessionsPerStation/:id/:from/:to
+
+
 
 
 
