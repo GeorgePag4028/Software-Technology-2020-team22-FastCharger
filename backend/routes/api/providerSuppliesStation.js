@@ -4,7 +4,7 @@ const router = express.Router();
 const db = require('../../dbconnect');
 
 //Gets all providerSuppliesStation
-router.get('/getAllProviderSuppliesStations', (req, res) => {
+router.get('/', (req, res) => {
     let sql = 'SELECT * FROM providerSuppliesStation';
     let query = db.query(sql, (err, results) => {
         if (err) throw err;
@@ -14,7 +14,7 @@ router.get('/getAllProviderSuppliesStations', (req, res) => {
 });
 
 //Get one providerSuppliesStation
-router.get('/getProviderSuppliesStation/:id', (req, res) => {
+router.get('/:id', (req, res) => {
     let sql = `SELECT * FROM providerSuppliesStation WHERE idProviderSuppliesStation =${req.params.id}`;
     let query = db.query(sql, (err, result) => {
         if (err) throw err
@@ -27,7 +27,7 @@ router.get('/getProviderSuppliesStation/:id', (req, res) => {
 });
 
 //Create a providerSuppliesStation
-router.post('/postNewProviderSuppliesStation', (req, res) => {
+router.post('/', (req, res) => {
     const newProviderSuppliesStation = {
         ...req.body
     };
@@ -44,7 +44,7 @@ router.post('/postNewProviderSuppliesStation', (req, res) => {
 });
 
 //updateProviderSuppliesStation
-router.put('/updateProviderSuppliesStation/:id', (req, res) => {
+router.put('/:id', (req, res) => {
     let sqlTest = `SELECT * FROM providerSuppliesStation WHERE idProviderSuppliesStation =${req.params.id}`;
     let queryTest = db.query(sqlTest, (err, result) => {
         if (err) throw err
@@ -66,7 +66,7 @@ router.put('/updateProviderSuppliesStation/:id', (req, res) => {
 });
 
 //deleteProviderSuppliesStation
-router.delete('/deleteProviderSuppliesStation/:id',(req,res)=>{
+router.delete('/:id',(req,res)=>{
     let sqlTest = `SELECT * FROM providerSuppliesStation WHERE idProviderSuppliesStation =${req.params.id}`;
     let queryTest = db.query(sqlTest, (err, result) => {
         if (err) throw err

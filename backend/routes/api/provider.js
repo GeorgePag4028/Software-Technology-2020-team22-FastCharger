@@ -4,7 +4,7 @@ const router = express.Router();
 const db = require('../../dbconnect');
 
 //Gets all Providers
-router.get('/getAllProviders', (req, res) => {
+router.get('/', (req, res) => {
     let sql = 'SELECT * FROM provider';
     let query = db.query(sql, (err, results) => {
         if (err) throw err;
@@ -13,7 +13,7 @@ router.get('/getAllProviders', (req, res) => {
 
 });
 //Get one provider
-router.get('/getProvider/:id', (req, res) => {
+router.get('/:id', (req, res) => {
 
     let sql = `SELECT * FROM provider WHERE idProvider =${req.params.id}`;
     let query = db.query(sql, (err, result) => {
@@ -26,7 +26,7 @@ router.get('/getProvider/:id', (req, res) => {
 
 });
 //Create a provider
-router.post('/postNewProvider', (req, res) => {
+router.post('/', (req, res) => {
     const newProvider = {
         ...req.body
     };
@@ -42,7 +42,7 @@ router.post('/postNewProvider', (req, res) => {
     });
 });
 //updateProvider
-router.put('/updateProvider/:id', (req, res) => {
+router.put('/:id', (req, res) => {
     let sqlTest = `SELECT * FROM provider WHERE idProvider =${req.params.id}`;
     let queryTest = db.query(sqlTest, (err, result) => {
         if (err) throw err
@@ -63,7 +63,7 @@ router.put('/updateProvider/:id', (req, res) => {
     });
 });
 //deleteProvider
-router.delete('/deleteProvider/:id', (req, res) => {
+router.delete('/:id', (req, res) => {
     let sqlTest = `SELECT * FROM provider WHERE idProvider =${req.params.id}`;
     let queryTest = db.query(sqlTest, (err, result) => {
         if (err) throw err

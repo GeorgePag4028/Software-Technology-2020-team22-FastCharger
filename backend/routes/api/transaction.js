@@ -4,7 +4,7 @@ const router = express.Router();
 const db = require('../../dbconnect');
 
 //Gets all transactions
-router.get('/getAllTransactions', (req, res) => {
+router.get('/', (req, res) => {
     let sql = 'SELECT * FROM transaction';
     let query = db.query(sql, (err, results) => {
         if (err) throw err;
@@ -13,7 +13,7 @@ router.get('/getAllTransactions', (req, res) => {
 
 });
 //Get one transaction
-router.get('/getTransaction/:id', (req, res) => {
+router.get('/:id', (req, res) => {
     let sql = `SELECT * FROM transaction WHERE idTransaction =${req.params.id}`;
     let query = db.query(sql, (err, result) => {
         if (err) throw err
@@ -22,7 +22,7 @@ router.get('/getTransaction/:id', (req, res) => {
 
 });
 //Create a transaction
-router.get('/postNewTransaction', (req, res) => {
+router.get('/', (req, res) => {
     const newTransaction = {
         idUser: '2',
         idCharger: '1',
@@ -44,7 +44,7 @@ router.get('/postNewTransaction', (req, res) => {
     });
 });
 //updateTransaction
-router.get('/updateTransaction/:id', (req, res) => {
+router.get('/:id', (req, res) => {
     let newPaymentMethod = 'debtCard';
     let sql = `UPDATE transaction SET paymentMethod='${newPaymentMethod}' WHERE idTransaction = ${req.params.id}`;
     let query = db.query(sql, (err, result) => {
@@ -53,7 +53,7 @@ router.get('/updateTransaction/:id', (req, res) => {
     });
 });
 //deleteTransaction
-router.get('/deleteTransaction/:id',(req,res)=>{
+router.get('/:id',(req,res)=>{
     let sql = `DELETE FROM transaction WHERE idTransaction = ${req.params.id}`;
     let query = db.query(sql, (err, result) => {
         if (err) throw err;

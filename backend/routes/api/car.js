@@ -4,7 +4,7 @@ const router = express.Router();
 const db = require('../../dbconnect');
 
 //Gets all car
-router.get('/getAllCars', (req, res) => {
+router.get('/', (req, res) => {
     let sql = 'SELECT * FROM car';
     let query = db.query(sql, (err, results) => {
         if (err) throw err;
@@ -13,7 +13,7 @@ router.get('/getAllCars', (req, res) => {
 
 });
 //Get one car
-router.get('/getCar/:id', (req, res) => {
+router.get('/:id', (req, res) => {
 
     let sql = `SELECT * FROM car WHERE idCar =${req.params.id}`;
     let query = db.query(sql, (err, result) => {
@@ -27,7 +27,7 @@ router.get('/getCar/:id', (req, res) => {
 
 });
 //Create a car
-router.post('/postNewCar', (req, res) => {
+router.post('/', (req, res) => {
     const newCar = {
         ...req.body
 
@@ -44,7 +44,7 @@ router.post('/postNewCar', (req, res) => {
     });
 });
 //updateCar
-router.put('/updateCar/:id', (req, res) => {
+router.put('/:id', (req, res) => {
     let sqlTest = `SELECT * FROM car WHERE idCar =${req.params.id}`;
     let queryTest = db.query(sqlTest, (err, result) => {
         if (err) throw err
@@ -67,7 +67,7 @@ router.put('/updateCar/:id', (req, res) => {
     });
 });
 //deleteCar
-router.delete('/deleteCar/:id', (req, res) => {
+router.delete('/:id', (req, res) => {
     let sqlTest = `SELECT * FROM car WHERE idCar =${req.params.id}`;
     let queryTest = db.query(sqlTest, (err, result) => {
         if (err) throw err

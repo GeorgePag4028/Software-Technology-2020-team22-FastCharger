@@ -4,7 +4,7 @@ const router = express.Router();
 const db = require('../../dbconnect');
 
 //Gets all stationOffersDiscountChargers
-router.get('/getAllStationOffersDiscountChargers', (req, res) => {
+router.get('/', (req, res) => {
     let sql = 'SELECT * FROM stationOffersDiscountCharger';
     let query = db.query(sql, (err, results) => {
         if (err) throw err;
@@ -14,7 +14,7 @@ router.get('/getAllStationOffersDiscountChargers', (req, res) => {
 });
 
 //Get one stationOffersDiscountCharger
-router.get('/getStationOffersDiscountCharger/:id', (req, res) => {
+router.get('/:id', (req, res) => {
     let sql = `SELECT * FROM stationOffersDiscountCharger WHERE idStationOffersDiscountCharger =${req.params.id}`;
     let query = db.query(sql, (err, result) => {
         if (err) throw err
@@ -27,7 +27,7 @@ router.get('/getStationOffersDiscountCharger/:id', (req, res) => {
 });
 
 //Create a stationOffersDiscountCharger
-router.post('/postNewStationOffersDiscountCharger', (req, res) => {
+router.post('/', (req, res) => {
     const newStationOffersDiscountCharger = {
         ...req.body
     };
@@ -44,7 +44,7 @@ router.post('/postNewStationOffersDiscountCharger', (req, res) => {
 });
 
 //updateStationOffersDiscountCharger
-router.put('/updateStationOffersDiscountCharger/:id', (req, res) => {
+router.put('/:id', (req, res) => {
     let sqlTest = `SELECT * FROM stationOffersDiscountCharger WHERE idStationOffersDiscountCharger =${req.params.id}`;
     let queryTest = db.query(sqlTest, (err, result) => {
         if (err) throw err
@@ -66,7 +66,7 @@ router.put('/updateStationOffersDiscountCharger/:id', (req, res) => {
 });
 
 //deleteStationOffersDiscountCharger
-router.delete('/deleteStationOffersDiscountCharger/:id',(req,res)=>{
+router.delete('/:id',(req,res)=>{
     let sqlTest = `SELECT * FROM stationOffersDiscountCharger WHERE idStationOffersDiscountCharger =${req.params.id}`;
     let queryTest = db.query(sqlTest, (err, result) => {
         if (err) throw err

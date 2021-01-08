@@ -4,7 +4,7 @@ const router = express.Router();
 const db = require('../../dbconnect');
 
 //Gets all Charger
-router.get('/getAllChargers', (req, res) => {
+router.get('/', (req, res) => {
     let sql = 'SELECT *FROM charger';
     let query = db.query(sql, (err, results) => {
         if (err) throw err;
@@ -13,7 +13,7 @@ router.get('/getAllChargers', (req, res) => {
 
 });
 //Get one user
-router.get('/getCharger/:id', (req, res) => {
+router.get('/:id', (req, res) => {
     let sql = `SELECT * FROM charger WHERE idCharger =${req.params.id}`;
     let query = db.query(sql, (err, result) => {
         if (err) throw err
@@ -25,7 +25,7 @@ router.get('/getCharger/:id', (req, res) => {
 
 });
 //Create a user
-router.post('/postNewCharger', (req, res) => {
+router.post('/', (req, res) => {
     const newCharger = {
         ...req.body
     };
@@ -41,7 +41,7 @@ router.post('/postNewCharger', (req, res) => {
     });
 });
 //updateUser
-router.put('/updateCharger/:id', (req, res) => {
+router.put('/:id', (req, res) => {
     let sqlTest = `SELECT * FROM charger WHERE idCharger =${req.params.id}`;
     let queryTest = db.query(sqlTest, (err, result) => {
         if (err) throw err
@@ -62,7 +62,7 @@ router.put('/updateCharger/:id', (req, res) => {
     });
 });
 //deleteUser
-router.delete('/deleteCharger/:id', (req, res) => {
+router.delete('/:id', (req, res) => {
     let sqlTest = `SELECT * FROM charger WHERE idCharger =${req.params.id}`;
     let queryTest = db.query(sqlTest, (err, result) => {
         if (err) throw err

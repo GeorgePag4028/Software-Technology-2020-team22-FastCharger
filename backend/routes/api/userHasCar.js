@@ -4,7 +4,7 @@ const router = express.Router();
 const db = require('../../dbconnect');
 
 //Gets all userHasCars
-router.get('/getAllUserHasCars', (req, res) => {
+router.get('/', (req, res) => {
     let sql = 'SELECT * FROM userHasCar';
     let query = db.query(sql, (err, results) => {
         if (err) throw err;
@@ -14,7 +14,7 @@ router.get('/getAllUserHasCars', (req, res) => {
 });
 
 //Get one userHasCar
-router.get('/getUserHasCar/:id', (req, res) => {
+router.get('/:id', (req, res) => {
     let sql = `SELECT * FROM userHasCar WHERE idUserHasCar =${req.params.id}`;
     let query = db.query(sql, (err, result) => {
         if (err) throw err
@@ -27,7 +27,7 @@ router.get('/getUserHasCar/:id', (req, res) => {
 });
 
 //Create a userHasCar
-router.post('/postNewUserHasCar', (req, res) => {
+router.post('/', (req, res) => {
     const newUserHasCar = {
         ...req.body
     };
@@ -44,7 +44,7 @@ router.post('/postNewUserHasCar', (req, res) => {
 });
 
 //updateUserHasCar
-router.put('/updateUserHasCar/:id', (req, res) => {
+router.put('/:id', (req, res) => {
     let sqlTest = `SELECT * FROM userHasCar WHERE idUserHasCar =${req.params.id}`;
     let queryTest = db.query(sqlTest, (err, result) => {
         if (err) throw err
@@ -66,7 +66,7 @@ router.put('/updateUserHasCar/:id', (req, res) => {
 });
 
 //deleteUserHasCar
-router.delete('/deleteUserHasCar/:id',(req,res)=>{
+router.delete('/:id',(req,res)=>{
     let sqlTest = `SELECT * FROM userHasCar WHERE idUserHasCar =${req.params.id}`;
     let queryTest = db.query(sqlTest, (err, result) => {
         if (err) throw err

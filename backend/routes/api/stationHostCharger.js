@@ -4,7 +4,7 @@ const router = express.Router();
 const db = require('../../dbconnect');
 
 //Gets all stationHostChargers
-router.get('/getAllStationHostChargers', (req, res) => {
+router.get('/', (req, res) => {
     let sql = 'SELECT * FROM stationHostCharger';
     let query = db.query(sql, (err, results) => {
         if (err) throw err;
@@ -14,7 +14,7 @@ router.get('/getAllStationHostChargers', (req, res) => {
 });
 
 //Get one stationHostCharger
-router.get('/getStationHostCharger/:id', (req, res) => {
+router.get('/:id', (req, res) => {
     let sql = `SELECT * FROM stationHostCharger WHERE idStationHostCharger =${req.params.id}`;
     let query = db.query(sql, (err, result) => {
         if (err) throw err
@@ -27,7 +27,7 @@ router.get('/getStationHostCharger/:id', (req, res) => {
 });
 
 //Create a stationHostCharger
-router.post('/postNewStationHostCharger', (req, res) => {
+router.post('/', (req, res) => {
     const newStationHostCharger = {
         ...req.body
     };
@@ -44,7 +44,7 @@ router.post('/postNewStationHostCharger', (req, res) => {
 });
 
 //updateStationHostCharger
-router.put('/updateStationHostCharger/:id', (req, res) => {
+router.put('/:id', (req, res) => {
     let sqlTest = `SELECT * FROM stationHostCharger where idStationHostCharger =${req.params.id}`;
     let queryTest = db.query(sqlTest, (err, result) => {
         if (err) throw err
@@ -67,7 +67,7 @@ router.put('/updateStationHostCharger/:id', (req, res) => {
 
 
 //deleteStationHostCharger
-router.delete('/deleteStationHostCharger/:id',(req,res)=>{
+router.delete('/:id',(req,res)=>{
     let sqlTest = `DELETE FROM stationHostCharger WHERE idStationHostCharger = ${req.params.id}`;
     let queryTest = db.query(sqlTest, (err, result) => {
         if (err) throw err
