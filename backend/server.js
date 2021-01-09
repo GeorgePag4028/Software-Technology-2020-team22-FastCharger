@@ -15,7 +15,7 @@ app.use(express.urlencoded({extended: false}));
 app.use('/database/createdb',require('./routes/database/createdb'));
 
 //this adds the table of the user
-app.use('/database/createUserTable',require('./routes/database/createUserTable'));
+app.use('/database/createClientTable',require('./routes/database/createClientTable'));
 
 //this adds the table of the car
 app.use('/database/createCarTable',require('./routes/database/createCarTable'));
@@ -46,13 +46,13 @@ app.use('/database/createStationOffersDiscountChargerTable',require('./routes/da
 app.use('/database/createTransactionTable', require('./routes/database/createTransactionTable'));
 
 //this adds the table of the UserHasCar
-app.use('/database/createUserHasCarTable', require('./routes/database/createUserHasCarTable'));
+app.use('/database/createClientHasCarTable', require('./routes/database/createClientHasCarTable'));
 
 //this adds the table of the CarChargedTransaction
 app.use('/database/createCarChargedTransactionTable',require('./routes/database/createCarChargedTransactionTable'));
 
 //all api endpoints 
-app.use('/api/user',require('./routes/api/user'));
+app.use('/api/client',require('./routes/api/client'));
 app.use('/api/car',require('./routes/api/car'));
 app.use('/api/provider',require('./routes/api/provider'));
 app.use('/api/station',require('./routes/api/station'));
@@ -61,7 +61,7 @@ app.use('/api/stationHostCharger',require('./routes/api/stationHostCharger'));
 app.use('/api/providerSuppliesStation',require('./routes/api/providerSuppliesStation'));
 app.use('/api/stationOffersDiscountCharger',require('./routes/api/stationOffersDiscountCharger'));
 app.use('/api/transaction',require('./routes/api/transaction'));
-app.use('/api/userHasCar',require('./routes/api/userHasCar'));
+app.use('/api/clientHasCar',require('./routes/api/clientHasCar'));
 app.use('/api/carChargedTransaction',require('./routes/api/carChargedTransaction'));
 
 //add usage to the application

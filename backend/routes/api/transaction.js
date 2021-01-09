@@ -17,6 +17,9 @@ router.get('/:id', (req, res) => {
     let sql = `SELECT * FROM transaction WHERE idTransaction =${req.params.id}`;
     let query = db.query(sql, (err, result) => {
         if (err) throw err
+        if (JSON.stringify(result) === '[]') return res.status(400).json({
+            msg: `Transaction with this id ${req.params.id} doesn't exist.`
+        });
         res.json(result);
     });
 
@@ -24,17 +27,11 @@ router.get('/:id', (req, res) => {
 //Create a transaction
 router.get('/', (req, res) => {
     const newTransaction = {
-        idUser: '2',
-        idCharger: '1',
-        idStation : '1',
-        paymentMethod: 'cash',
-        amount: '50.01',
-        isInOffers : '0',
-        time : '2021-01-01 15:00:00'
+        ...req.body
     };
-    if (!newTransaction.idUser || !newTransaction.idCharger || !newTransaction.paymentMethod || !newTransaction.amount || !newTransaction.isInOffers || !newTransaction.time||!newTransaction.idStation) {
+    if (!newTransaction.idClient || !newTransaction.idCharger || !newTransaction.paymentMethod || !newTransaction.amount || !newTransaction.isInOffers || !newTransaction.time||!newTransaction.idStation) {
         return res.status(400).json({
-            msg: 'Please include a idUser, idCharger, idStation, paymentMethod, isInOffers, and time'
+            msg: 'Please include a idClient, idCharger, idStation, paymentMethod, isInOffers, and time'
         });
     }
     let sql = 'INSERT INTO transaction SET ?';
@@ -45,19 +42,42 @@ router.get('/', (req, res) => {
 });
 //updateTransaction
 router.get('/:id', (req, res) => {
-    let newPaymentMethod = 'debtCard';
-    let sql = `UPDATE transaction SET paymentMethod='${newPaymentMethod}' WHERE idTransaction = ${req.params.id}`;
-    let query = db.query(sql, (err, result) => {
-        if (err) throw err;
-        res.send('Transaction updated...');
+    let sqlTest = `SELECT * FROM transaction WHERE idTransaction =${req.params.id}`;
+    let queryTest = db.query(sqlTest, (err, result) => {
+        if (err) throw err
+        else if (JSON.stringify(result) === '[]') return res.status(400).json({
+            msg: `Transaction with this id ${req.params.id} doesn't exist.`
+        });
+        else {
+            const updateCar = {
+                ...req.body
+            };
+            let sql = `UPDATE trasnaction SET ? WHERE idTransaction = ${req.params.id}`;
+            let query = db.query(sql, (err, result) => {
+                if (err) throw err;
+                res.send('Transaction updated...');
+            });
+
+        }
+
+
     });
 });
 //deleteTransaction
 router.get('/:id',(req,res)=>{
-    let sql = `DELETE FROM transaction WHERE idTransaction = ${req.params.id}`;
-    let query = db.query(sql, (err, result) => {
-        if (err) throw err;
-        res.send('Transaction deleted...');
+    let sqlTest = `SELECT * FROM transaction WHERE idTransaction =${req.params.id}`;
+    let queryTest = db.query(sqlTest, (err, result) => {
+        if (err) throw err
+        else if (JSON.stringify(result) === '[]') return res.status(400).json({
+            msg: `Transaction with this id ${req.params.id} doesn't exits.`
+        });
+        else {
+            let sql = `DELETE FROM transaction WHERE idTransaction = ${req.params.id}`;
+            let query = db.query(sql, (err, result) => {
+                if (err) throw err;
+                res.send('Transaction deleted...');
+            });
+        }
     });
 } );
 

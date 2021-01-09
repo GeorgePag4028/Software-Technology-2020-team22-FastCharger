@@ -5,7 +5,7 @@ const db = require('../../dbconnect');
 
 //Gets all userHasCars
 router.get('/', (req, res) => {
-    let sql = 'SELECT * FROM userHasCar';
+    let sql = 'SELECT * FROM clientHasCar';
     let query = db.query(sql, (err, results) => {
         if (err) throw err;
         res.json(results);
@@ -15,11 +15,11 @@ router.get('/', (req, res) => {
 
 //Get one userHasCar
 router.get('/:id', (req, res) => {
-    let sql = `SELECT * FROM userHasCar WHERE idUserHasCar =${req.params.id}`;
+    let sql = `SELECT * FROM clientHasCar WHERE idClientHasCar =${req.params.id}`;
     let query = db.query(sql, (err, result) => {
         if (err) throw err
         if (JSON.stringify(result) === '[]') return res.status(400).json({
-            msg: `UserHasCar~~ with this id ${req.params.id} doesn't exist.`
+            msg: `ClientHasCar with this id ${req.params.id} doesn't exist.`
         });
         res.json(result);
     });
@@ -28,38 +28,38 @@ router.get('/:id', (req, res) => {
 
 //Create a userHasCar
 router.post('/', (req, res) => {
-    const newUserHasCar = {
+    const newClientHasCar = {
         ...req.body
     };
-    if (!newUserHasCar.idUser || !newUserHasCar.idCar) {
+    if (!newClientHasCar.idClient || !newClientHasCar.idCar) {
         return res.status(400).json({
-            msg: 'Please include a idUser and idCar'
+            msg: 'Please include a idClient and idCar'
         });
     }
-    let sql = 'INSERT INTO userHasCar SET ?';
-    let query = db.query(sql, newUserHasCar, (err, result) => {
+    let sql = 'INSERT INTO clientHasCar SET ?';
+    let query = db.query(sql, newClientHasCar, (err, result) => {
         if (err) throw err;
-        res.send('UserHasCar added ...');
+        res.send('ClientHasCar added ...');
     });
 });
 
 //updateUserHasCar
 router.put('/:id', (req, res) => {
-    let sqlTest = `SELECT * FROM userHasCar WHERE idUserHasCar =${req.params.id}`;
+    let sqlTest = `SELECT * FROM clientHasCar WHERE idClientHasCar =${req.params.id}`;
     let queryTest = db.query(sqlTest, (err, result) => {
         if (err) throw err
         else if (JSON.stringify(result) === '[]') return res.status(400).json({
-            msg: `UserHasCar with this id ${req.params.id} doesn't exist.`
+            msg: `ClientHasCar with this id ${req.params.id} doesn't exist.`
         });
         else {
             const updateUserHasCar = {
                 ...req.body
             };
 
-            let sql = `UPDATE userHasCar SET ? WHERE idUserHasCar = ${req.params.id}`;
+            let sql = `UPDATE clientHasCar SET ? WHERE idClientHasCar = ${req.params.id}`;
             let query = db.query(sql, updateUserHasCar, (err, result) => {
                 if (err) throw err;
-                res.send('UserHasCar updated...');
+                res.send('ClientHasCar updated...');
             });
         }
     });
@@ -67,17 +67,17 @@ router.put('/:id', (req, res) => {
 
 //deleteUserHasCar
 router.delete('/:id',(req,res)=>{
-    let sqlTest = `SELECT * FROM userHasCar WHERE idUserHasCar =${req.params.id}`;
+    let sqlTest = `SELECT * FROM clientHasCar WHERE idClientHasCar =${req.params.id}`;
     let queryTest = db.query(sqlTest, (err, result) => {
         if (err) throw err
         else if (JSON.stringify(result) === '[]') return res.status(400).json({
-            msg: `UserHasCar with this id ${req.params.id} doesn't exist.`
+            msg: `ClientHasCar with this id ${req.params.id} doesn't exist.`
         });
         else {
-            let sql = `DELETE FROM userHasCar WHERE idUserHasCar = ${req.params.id}`;
+            let sql = `DELETE FROM clientHasCar WHERE idClientHasCar = ${req.params.id}`;
             let query = db.query(sql, (err, result) => {
                 if (err) throw err;
-                res.send('UserHasCar deleted...');
+                res.send('ClientHasCar deleted...');
             });
         }
     });
