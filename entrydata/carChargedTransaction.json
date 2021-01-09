@@ -1,0 +1,81 @@
+[{
+        "idTransaction": "1",
+        "idCar": "1",
+        "percentageBatteryStart": "20.1",
+        "percentageBatteryFinish": "45.5",
+        "durationInMin": "30"
+
+    },
+    {
+        "idTransaction": "2",
+        "idCar": "2",
+        "percentageBatteryStart": "15.5",
+        "percentageBatteryFinish": "60.1",
+        "durationInMin": "55.5"
+
+    },
+    {
+        "idTransaction": "3",
+        "idCar": "3",
+        "percentageBatteryStart": "05.1",
+        "percentageBatteryFinish": "99.9",
+        "durationInMin": "120.2"
+
+    },
+    {
+        "idTransaction": "4",
+        "idCar": "4",
+        "percentageBatteryStart": "20.5",
+        "percentageBatteryFinish": "57.3",
+        "durationInMin": "45.2"
+
+    },
+    {
+        "idTransaction": "5",
+        "idCar": "5",
+        "percentageBatteryStart": "78.1",
+        "percentageBatteryFinish": "96.2",
+        "durationInMin": "15"
+
+    },
+    {
+        "idTransaction": "6",
+        "idCar": "6",
+        "percentageBatteryStart": "25.5",
+        "percentageBatteryFinish": "97.6",
+        "durationInMin": "65.1"
+
+    },
+    {
+        "idTransaction": "7",
+        "idCar": "7",
+        "percentageBatteryStart": "15.2",
+        "percentageBatteryFinish": "87.2",
+        "durationInMin": "45.2"
+
+    },
+    {
+        "idTransaction": "8",
+        "idCar": "8",
+        "percentageBatteryStart": "23.2",
+        "percentageBatteryFinish": "70.2",
+        "durationInMin": "67.2"
+
+    },
+    {
+        "idTransaction": "9",
+        "idCar": "9",
+        "percentageBatteryStart": "10",
+        "percentageBatteryFinish": "70",
+        "durationInMin": "65.5"
+
+    },
+    {
+        "idTransaction": "10",
+        "idCar": "10",
+        "percentageBatteryStart": "13.2",
+        "percentageBatteryFinish": "92.2",
+        "durationInMin": "140.2"
+
+    }
+]

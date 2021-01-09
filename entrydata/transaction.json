@@ -6,7 +6,7 @@
         "paymentMethod":"cash",
         "amount":"45.5",
         "isInOffers":"0",
-        "datetime":"2021-01-01 15:00:00"
+        "time":"2021-01-01 15:00:00"
 
     },
     {
@@ -16,7 +16,7 @@
         "paymentMethod":"cash",
         "amount":"20.0",
         "isInOffers":"1",
-        "datetime":"2020-01-05 13:00:00"
+        "time":"2020-01-05 13:00:00"
 
     },
     {
@@ -26,7 +26,7 @@
         "paymentMethod":"debt card",
         "amount":"40.0",
         "isInOffers":"1",
-        "datetime":"2018-05-02 16:30:00"
+        "time":"2018-05-02 16:30:00"
 
     },
     {
@@ -36,7 +36,7 @@
         "paymentMethod":"cash",
         "amount":"30.0",
         "isInOffers":"0",
-        "datetime":"2019-10-10 17:00:00"
+        "time":"2019-10-10 17:00:00"
 
     },
     {
@@ -46,7 +46,7 @@
         "paymentMethod":"cash",
         "amount":"25.5",
         "isInOffers":"1",
-        "datetime":"2018-06-05 19:00:00"
+        "time":"2018-06-05 19:00:00"
 
     },
     {
@@ -56,7 +56,7 @@
         "paymentMethod":"debt card",
         "amount":"30.2",
         "isInOffers":"1",
-        "datetime":"2011-01-01 15:00:00"
+        "time":"2011-01-01 15:00:00"
 
     },
     {
@@ -66,7 +66,7 @@
         "paymentMethod":"cash",
         "amount":"50",
         "isInOffers":"1",
-        "datetime":"2018-03-04 12:00:00"
+        "time":"2018-03-04 12:00:00"
 
     },
     {
@@ -76,7 +76,7 @@
         "paymentMethod":"cash",
         "amount":"23.2",
         "isInOffers":"1",
-        "datetime":"2015-01-05 17:30:00"
+        "time":"2015-01-05 17:30:00"
 
     },
     {
@@ -86,7 +86,7 @@
         "paymentMethod":"debt card",
         "amount":"43.2",
         "isInOffers":"0",
-        "datetime":"2016-03-03 17:45:00"
+        "time":"2016-03-03 17:45:00"
 
     },
     {
@@ -96,7 +96,7 @@
         "paymentMethod":"cash",
         "amount":"31.1",
         "isInOffers":"0",
-        "datetime":"2016-04-04 18:00:00"
+        "time":"2016-04-04 18:00:00"
 
     }
 ]
