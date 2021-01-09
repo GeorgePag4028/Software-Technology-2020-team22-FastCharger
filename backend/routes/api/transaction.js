@@ -25,7 +25,7 @@ router.get('/:id', (req, res) => {
 
 });
 //Create a transaction
-router.get('/', (req, res) => {
+router.post('/', (req, res) => {
     const newTransaction = {
         ...req.body
     };
@@ -41,7 +41,7 @@ router.get('/', (req, res) => {
     });
 });
 //updateTransaction
-router.get('/:id', (req, res) => {
+router.update('/:id', (req, res) => {
     let sqlTest = `SELECT * FROM transaction WHERE idTransaction =${req.params.id}`;
     let queryTest = db.query(sqlTest, (err, result) => {
         if (err) throw err
@@ -64,7 +64,7 @@ router.get('/:id', (req, res) => {
     });
 });
 //deleteTransaction
-router.get('/:id',(req,res)=>{
+router.delete('/:id',(req,res)=>{
     let sqlTest = `SELECT * FROM transaction WHERE idTransaction =${req.params.id}`;
     let queryTest = db.query(sqlTest, (err, result) => {
         if (err) throw err
