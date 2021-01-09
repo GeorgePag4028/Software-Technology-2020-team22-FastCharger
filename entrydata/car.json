@@ -1,0 +1,83 @@
+[
+    {
+        "type": "SUV",
+        "brand": "bmw",
+        "kilometres": "5000",
+        "model": "XM5",
+        "releaseYear": "2015",
+        "usableBatterySize": "95"
+    },
+    {
+        "type": "Sedan",
+        "brand": "bmw",
+        "kilometres": "10000",
+        "model": "M5",
+        "releaseYear": "2018",
+        "usableBatterySize": "130"
+    },
+    {
+        "type": "Sedan",
+        "brand": "audi",
+        "kilometres": "50000",
+        "model": "S4",
+        "releaseYear": "2020",
+        "usableBatterySize": "170"
+    },
+    {
+        "type": "Coupe",
+        "brand": "audi",
+        "kilometres": "100000",
+        "model": "TTRS",
+        "releaseYear": "2014",
+        "usableBatterySize": "60"
+    },
+    {
+        "type": "SUV",
+        "brand": "mersedes",
+        "kilometres": "100000",
+        "model": "G Wagon",
+        "releaseYear": "2016",
+        "usableBatterySize": "200"
+    },
+    {
+        "type": "Sedan",
+        "brand": "mersedes",
+        "kilometres": "78000",
+        "model": "C class 200",
+        "releaseYear": "2019",
+        "usableBatterySize": "145"
+    },
+    {
+        "type": "Sedan",
+        "brand": "telsa",
+        "kilometres": "48000",
+        "model": "Model 3",
+        "releaseYear": "2016",
+        "usableBatterySize": "200"
+    },
+    {
+        "type": "Sedan",
+        "brand": "telsa",
+        "kilometres": "15000",
+        "model": "Model S",
+        "releaseYear": "2018",
+        "usableBatterySize": "250"
+    },
+    {
+        "type": "Coupe",
+        "brand": " ‎Chevrolet",
+        "kilometres": "58000",
+        "model": "Camaro",
+        "releaseYear": "2015",
+        "usableBatterySize": "150"
+    },
+    {
+        "type": "Coupe",
+        "brand": "Toyota",
+        "kilometres": "60000",
+        "model": "Supra",
+        "releaseYear": "2019",
+        "usableBatterySize": "80"
+    }
+
+]
