@@ -41,7 +41,7 @@ router.post('/', (req, res) => {
     });
 });
 //updateTransaction
-router.update('/:id', (req, res) => {
+router.put('/:id', (req, res) => {
     let sqlTest = `SELECT * FROM transaction WHERE idTransaction =${req.params.id}`;
     let queryTest = db.query(sqlTest, (err, result) => {
         if (err) throw err
