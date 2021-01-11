@@ -55,8 +55,9 @@ router.put('/:id', (req, res) => {
             const updateCar = {
                 ...req.body
             };
+		console.log(updateCar);
             let sql = `UPDATE car SET ? WHERE idCar = ${req.params.id}`;
-            let query = db.query(sql, (err, result) => {
+            let query = db.query(sql,updateCar, (err, result) => {
                 if (err) throw err;
                 res.send('Car updated...');
             });

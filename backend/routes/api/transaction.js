@@ -29,7 +29,7 @@ router.post('/', (req, res) => {
     const newTransaction = {
         ...req.body
     };
-    if (!newTransaction.idClient || !newTransaction.idCharger || !newTransaction.paymentMethod || !newTransaction.amount || !newTransaction.isInOffers || !newTransaction.time||!newTransaction.idStation) {
+    if (!newTransaction.idClient || !newTransaction.idCharger || !newTransaction.paymentMethod || !newTransaction.amount || !newTransaction.isInOffers || !newTransaction.time||!newTransaction.idStation||!newTransaction.idProvider) {
         return res.status(400).json({
             msg: 'Please include a idClient, idCharger, idStation, paymentMethod, isInOffers, and time'
         });

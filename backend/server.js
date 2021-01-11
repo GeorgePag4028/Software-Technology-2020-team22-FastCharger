@@ -4,10 +4,11 @@ const path = require('path');
 const fs =require('fs');
 const https =require('https');
 const app = express();
-
+const bodyParser = require('body-parser');
 //Body Parser Middleware
 app.use(express.json());
-app.use(express.urlencoded({extended: false}));
+//app.use(express.urlencoded({extended: false}));
+app.use(bodyParser.urlencoded({extended:true}));
 
 
 
@@ -70,7 +71,7 @@ app.use('/usage/sessionPerProvider',require('./routes/usage/sessionPerProvider')
 app.use('/usage/sessionPerCar',require('./routes/usage/sessionPerCar'));
 app.use('/usage/sessionPerStation',require('./routes/usage/sessionPerStation'));
 
-
+app.use(express.static("../frontend"));
 
 const PORT = process.env.PORT || 5000;
 https.createServer({key:fs.readFileSync('server.key'),cert:fs.readFileSync('server.cert')},app).listen(PORT, () => console.log(`Server started on ${PORT}`));

@@ -29,7 +29,7 @@ router.post('/', (req, res) => {
     const newCharger = {
         ...req.body
     };
-    if (!newCharger.brand || !newCharger.type) {
+    if (!newCharger.brand || !newCharger.type||!newCharger.idChargerOperator) {
         return res.status(400).json({
             msg: 'Please include a brand,type'
         });

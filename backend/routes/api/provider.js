@@ -30,7 +30,7 @@ router.post('/', (req, res) => {
     const newProvider = {
         ...req.body
     };
-    if (!newProvider.pricesOnKwh || !newProvider.name || !newProvider.telephone || !newProvider.mail || !newProvider.website) {
+    if (!newProvider.pricesOnKwh || !newProvider.name || !newProvider.telephone || !newProvider.email || !newProvider.website) {
         return res.status(400).json({
             msg: 'Please include a pricesOnKwh,name,telephone,mail,website'
         });

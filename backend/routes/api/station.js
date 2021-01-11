@@ -29,7 +29,7 @@ router.post('/', (req, res) => {
     const newStation = {
         ...req.body
     };
-    if (!newStation.country || !newStation.city || !newStation.street || !newStation.number || !newStation.name || !newStation.telephone || !newStation.email || !newStation.website) {
+    if (!newStation.country || !newStation.city || !newStation.street || !newStation.number || !newStation.name || !newStation.telephone || !newStation.email || !newStation.website||!newStation.idStationOperator) {
         return res.status(400).json({
             msg: 'Please include a country,city,street,number,name,telephone,email,website'
         });
