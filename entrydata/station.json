@@ -7,7 +7,8 @@
         "name":"Babis boubos",
         "telephone":"2108989500",
         "email":"babisboubos@gmail.com",
-        "website":"babisboubos.com"
+        "website":"babisboubos.com",
+        "idStationOperator":"1"
     },
     {
         "country":"Greece",
@@ -17,7 +18,8 @@
         "name":"Mauridis",
         "telephone":"2107573500",
         "email":"mauridis@gmail.com",
-        "website":"mauridis.com"
+        "website":"mauridis.com",
+        "idStationOperator":"2"
     },
     {
         "country":"Greece",
@@ -27,7 +29,8 @@
         "name":"Paraskeuas",
         "telephone":"2103454500",
         "email":"paraskeuas@gmail.com",
-        "website":"paraskeuas.com"
+        "website":"paraskeuas.com",
+        "idStationOperator":"1"
     },
     {
         "country":"America",
@@ -37,7 +40,8 @@
         "name":"Trump ",
         "telephone":"2123129500",
         "email":"Trump@gmail.com",
-        "website":"Trump.com"
+        "website":"Trump.com",
+        "idStationOperator":"2"
     },
     {
         "country":"America",
@@ -47,7 +51,8 @@
         "name":"The Rock",
         "telephone":"2213223500",
         "email":"therock@gmail.com",
-        "website":"therock.com"
+        "website":"therock.com",
+        "idStationOperator":"1"
     },
     {
         "country":"Russia",
@@ -57,7 +62,8 @@
         "name":"Milakova",
         "telephone":"2321332500",
         "email":"milakova@gmail.com",
-        "website":"milakova.com"
+        "website":"milakova.com",
+        "idStationOperator":"2"
     },
     {
         "country":"German",
@@ -67,7 +73,8 @@
         "name":"Agsdfa",
         "telephone":"21023321421",
         "email":"Agsdfa@gmail.com",
-        "website":"Agsdfa.com"
+        "website":"Agsdfa.com",
+        "idStationOperator":"1"
     },
     {
         "country":"France",
@@ -77,7 +84,8 @@
         "name":"Ze sui",
         "telephone":"2321213399",
         "email":"zesui@gmail.com",
-        "website":"zesui.com"
+        "website":"zesui.com",
+        "idStationOperator":"2"
     },
     {
         "country":"England",
@@ -87,7 +95,8 @@
         "name":"Brexit",
         "telephone":"232231230",
         "email":"brexit@gmail.com",
-        "website":"brexit.com"
+        "website":"brexit.com",
+        "idStationOperator":"1"
     },
     {
         "country":"Italy",
@@ -97,7 +106,8 @@
         "name":"Mafia Place",
         "telephone":"2108212500",
         "email":"mafiaplace@gmail.com",
-        "website":"mafiaplace.com"
+        "website":"mafiaplace.com",
+        "idStationOperator":"2"
     },
     {
         "country":"Spain",
@@ -107,6 +117,7 @@
         "name":"Ibiza",
         "telephone":"2132132100",
         "email":"ibiza@gmail.com",
-        "website":"ibiza.com"
+        "website":"ibiza.com",
+        "idStationOperator":"2"
     }
 ]
