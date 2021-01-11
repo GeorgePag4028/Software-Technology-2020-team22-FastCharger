@@ -1,42 +1,52 @@
 [
     {
         "brand":"teslaSupperCharger",
-        "type":"Ac"
+        "type":"Ac",
+        "idChargerOperator":"1"
     },
     {
         "brand":"teslaSupperCharger",
-        "type":"Dc"
+        "type":"Dc",
+        "idChargerOperator":"2"
     },
     {
         "brand":"audiCharger",
-        "type":"Ac"
+        "type":"Ac",
+        "idChargerOperator":"2"
     },
     {
         "brand":"audiCharger",
-        "type":"Dc"
+        "type":"Dc",
+        "idChargerOperator":"3"
     },
     {
         "brand":"mercedesCharger",
-        "type":"Ac"
+        "type":"Ac",
+        "idChargerOperator":"1"
     },
     {
         "brand":"mercedesCharger",
-        "type":"Dc"
+        "type":"Dc",
+        "idChargerOperator":"3"
     },
     {
         "brand":"bmwCharger",
-        "type":"Ac"
+        "type":"Ac",
+        "idChargerOperator":"3"
     },
     {
         "brand":"bmwCharger",
-        "type":"Dc"
+        "type":"Dc",
+        "idChargerOperator":"2"
     },
     {
         "brand":"toytotaCharger",
-        "type":"Ac"
+        "type":"Ac",
+        "idChargerOperator":"3"
     },
     {
         "brand":"toytotaCharger",
-        "type":"Dc"
+        "type":"Dc",
+        "idChargerOperator":"1"
     }
 ]
