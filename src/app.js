@@ -3,7 +3,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 
 // load routes
-const adminRoutes = require('./routes/adminRoute');
+const adminRoutes = require('./routes/adminRoutes');
 
 const app = express();
 
