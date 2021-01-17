@@ -2,10 +2,16 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 
+//for the database
+const db = require('./util.database');
+
 // load routes
 const adminRoutes = require('./routes/adminRoutes');
 
 const app = express();
+
+//maybe for future use
+db.execute('SELECT * FROM users').then(result => {console.log(result);}).catch(err => {console.log(err);});
 
 //Midleware for parsing
 app.use(bodyParser.urlencoded({ extended: false }));
