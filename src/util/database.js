@@ -4,13 +4,16 @@
 //    host: 'localhost',
 //    user: 'root',
 //    database: 'carApp',
-//    password: '123123123'
+//    password: 'Kappa123!'
 //});
 
 //module.exports = pool.promise();
 
 const Sequelize = require('sequelize');
 
-const sequelize = new Sequelize('carApp', 'root', '123123123', {dialect: 'mysql', host: 'localhost'});
+const sequelize = new Sequelize('carApp', 'root', 'Kappa123!', {
+  dialect: 'mysql',
+  host: 'localhost',
+});
 
 module.exports = sequelize;
