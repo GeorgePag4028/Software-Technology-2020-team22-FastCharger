@@ -11,6 +11,6 @@
 
 const Sequelize = require('sequelize');
 
-const sequelize = new sequelize('carApp', 'root', '123123123', {dialect: 'mysql', host: 'localhost'});
+const sequelize = new Sequelize('carApp', 'root', '123123123', {dialect: 'mysql', host: 'localhost'});
 
 module.exports = sequelize;
