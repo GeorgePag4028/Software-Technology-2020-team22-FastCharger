@@ -1,0 +1,5 @@
+1) csv / json format. To deutero endpoint na to kanoyme kai se csv morfi. Genika na doume me ti queries dialegetai poia morfi.
+2) Authentication
+3) Csc file updload
+4) kapoia morfi validation sto input? 
+5) Ta ypoloipa endpoints tou 2

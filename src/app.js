@@ -45,7 +45,11 @@ app.use((req, res, next) => {
 
 //routes
 // basic endpoint app.use('/evcharge/api)
-
+app.use('/pog', (req, res, next) => {
+  console.log('In the starting point!');
+  res.send('<h1>Hello From fuck me up!</h1>');
+  next();
+});
 //admin routes
 app.use('/evcharge/api/admin', adminRoutes);
 
@@ -129,12 +133,12 @@ User.belongsToMany(Vehicle, {
 // });
 
 //for vehicleChargedTransaction.js
-Vehicle.belongsToMany(Transaction, {
-  through: VehicleChargedTransaction,
-  foreignKey: 'idTransaction',
-  constraints: true,
-  onDelete: 'CASCADE',
-});
+// Vehicle.belongsToMany(Transaction, {
+//   through: VehicleChargedTransaction,
+//   foreignKey: 'idTransaction',
+//   constraints: true,
+//   onDelete: 'CASCADE',
+// });
 Transaction.hasOne(Vehicle, {
   through: VehicleChargedTransaction,
   foreignKey: 'idVehicle',
@@ -145,7 +149,7 @@ Transaction.hasOne(Vehicle, {
 //one of these 2 should work
 //uncomment one of 2
 sequelize
-  .sync({ force: true })
+  .sync({ force: false }) // if i have this on true it drops all tables when it starts
   .then(result => {
     //console.log(result);
     app.listen(8765);
