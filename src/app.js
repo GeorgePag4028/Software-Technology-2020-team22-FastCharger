@@ -50,7 +50,7 @@ app.use((req, res, next) => {
 app.use('/evcharge/api/admin', adminRoutes);
 
 //for providerSuppliesStation.js
-/*
+
 Provider.belongsToMany(Station, {
   through: ProviderSuppliesStation,
   foreignKey: 'idStation',
@@ -115,21 +115,21 @@ Provider.hasMany(Transaction, {
 });
 
 //for userHasVehicle.js
-User.hasMany(Vehicle, {
+User.belongsToMany(Vehicle, {
   through: UserHasVehicle,
   foreignKey: 'idVehicle',
   constraints: true,
   onDelete: 'CASCADE',
 });
-Vehicle.hasOne(User, {
-  through: UserHasVehicle,
-  foreignKey: 'idUser',
-  constraints: true,
-  onDelete: 'CASCADE',
-});
+// Vehicle.hasOne(User, {
+//   through: UserHasVehicle,
+//   foreignKey: 'idUser',
+//   constraints: true,
+//   onDelete: 'CASCADE',
+// });
 
 //for vehicleChargedTransaction.js
-Vehicle.hasMany(Transaction, {
+Vehicle.belongsToMany(Transaction, {
   through: VehicleChargedTransaction,
   foreignKey: 'idTransaction',
   constraints: true,
@@ -141,7 +141,7 @@ Transaction.hasOne(Vehicle, {
   constraints: true,
   onDelete: 'CASCADE',
 });
-*/
+
 //one of these 2 should work
 //uncomment one of 2
 sequelize
