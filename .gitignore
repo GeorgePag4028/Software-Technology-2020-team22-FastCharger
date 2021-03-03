@@ -13,5 +13,7 @@ howToPushToGithub.txt
 # Local History for Visual Studio Code
 .history/
 /node_modules
+/src/resources/static/assets/uploads
 git_giannis.txt
+
 

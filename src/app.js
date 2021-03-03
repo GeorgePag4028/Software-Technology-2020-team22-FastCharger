@@ -1,7 +1,10 @@
 // load dependencies
 const express = require('express');
 const bodyParser = require('body-parser');
+// const formidable = require('formidable');
+const multer = require('multer');
 
+global.__basedir = __dirname;
 //for the database
 //this is useless
 //const db = require('./util/database');

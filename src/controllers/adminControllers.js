@@ -1,5 +1,7 @@
 const User = require('../models/user');
 
+// const formidable = require('formidable');
+
 //Υποστηρίζει τη μέθοδο POST για την προσθήκη νέου χρήστη ή την αλλαγή password αν ο χρήστης υπάρχει ήδη.
 //url: localhost:8765/evcharge/api/admin/usermod/:username/:password
 exports.postUser = (req, res, next) => {
@@ -68,5 +70,17 @@ exports.getUser = (req, res, next) => {
 
 exports.postFileUpload = (req, res, next) => {
   console.log('We are in the Admins session  route');
+  const form = formidable({ multiples: true });
+  form.parse(req, (err, fields, files) => {
+    if (err) {
+      res.writeHead(err.httpCode || 400, { 'Content-Type': 'text/plain' });
+      res.end(String(err));
+      return;
+    }
+    res.writeHead(200, { 'Content-Type': 'application/json' });
+    // res.end(JSON.stringify({ fields, files }, null, 2));
+    res.end(JSON.stringify({ fields, files }));
+  });
+
   //Υποστηρίζει τη μέθοδο POST για το «ανέβασμα» αρχείου CSV με δεδομένα γεγονότων φόρτισης. Το αρχείο πρέπει να είναι κωδικοποιημένο ως πεδίο "file" σε multipart/form-data κωδικοποίηση
 };
