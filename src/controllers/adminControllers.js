@@ -1,5 +1,8 @@
 const User = require('../models/user');
 let converter = require('json-2-csv');
+const Charger = require('../models/charger');
+// const { Transaction } = require('sequelize/types');
+const Transaction = require('../models/transaction');
 
 //Υποστηρίζει τη μέθοδο POST για την προσθήκη νέου χρήστη ή την αλλαγή password αν ο χρήστης υπάρχει ήδη.
 //url: localhost:8765/evcharge/api/admin/usermod/:username/:password
@@ -62,9 +65,9 @@ exports.getUser = (req, res, next) => {
             // print CSV string
             res.send(csv);
           });
-        } else res.send('<h1>Put right format</h1>');
+        } else res.status(400).send('Bad request. Check the parameters');
       } else {
-        res.send('<h1>User not found</h1>');
+        res.status(402).send('No data.');
       }
     })
     .catch(err => {
@@ -72,6 +75,40 @@ exports.getUser = (req, res, next) => {
     });
 
   console.log('We are in get user  route');
+};
+
+//Boηθητικά Endpoints
+// localhost:8765/evcharge/api/admin/healthcheck
+exports.getHealthcheck = (req, res, next) => {
+  Charger.findAll()
+    .then(users => {
+      res.json({ Status: 'OK' });
+    })
+    .catch(err => {
+      console.log(err);
+      res.json({ Status: 'Failed' });
+    });
+};
+
+exports.getResetSessions = (req, res, next) => {
+  Transaction.destroy({
+    truncate: true,
+  })
+    .then(data => {
+      return User.create({
+        rank: 'Admin',
+        username: 'admin',
+        password: 'petrol4ever',
+        email: 'test@mail.com',
+      });
+    })
+    .then(data => {
+      res.json({ Status: 'OK' });
+    })
+    .catch(err => {
+      console.log(err);
+      res.json({ Status: 'Failed' });
+    });
 };
 
 // exports.postFileUpload = (req, res, next) => {

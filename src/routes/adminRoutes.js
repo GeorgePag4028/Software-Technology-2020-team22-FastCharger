@@ -20,4 +20,8 @@ router.get('/users/:username', adminController.getUser);
 router.post('/system/sessionsupd', upload.single('file'), csvController.upload);
 router.get('/api/csv/tutorials', csvController.getVehicleChargedTransaction);
 
+// βοηθητικά endpoints
+router.get('/healthcheck', adminController.getHealthcheck);
+router.get('/resetSessions', adminController.getResetSessions);
+
 module.exports = router;

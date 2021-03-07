@@ -1,4 +1,4 @@
-const VehicleChargedTransaction = require('../models/VehicleChargedTransaction');
+const Transaction = require('../models/transaction');
 
 const fs = require('fs');
 const csv = require('fast-csv');
@@ -22,13 +22,13 @@ const upload = async (req, res) => {
         tutorials.push(row);
       })
       .on('end', () => {
-        VehicleChargedTransaction.bulkCreate(tutorials)
+        Transaction.bulkCreate(tutorials)
           .then(() => {
             let SessionsInUploadedFile = tutorials.length;
             let SessionsImported = tutorials.length;
             let TotalSessionsInDatabase;
 
-            VehicleChargedTransaction.findAll()
+            Transaction.findAll()
               .then(user => {
                 TotalSessionsInDatabase = user.length;
                 console.log(
