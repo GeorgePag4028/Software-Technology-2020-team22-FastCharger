@@ -52,6 +52,8 @@ exports.getUser = (req, res, next) => {
         if (req.query.format == null || req.query.format == 'json') {
           res.json(user);
         } else if (req.query.format == 'csv') {
+          console.log(typeof user.toJSON());
+          console.log(user.toJSON());
           converter.json2csv(user.toJSON(), (err, csv) => {
             if (err) {
               throw err;

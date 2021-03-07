@@ -8,6 +8,7 @@ const { Op } = require('sequelize');
 const Vehicle = require('../models/vehicle');
 const moment = require('moment');
 const sequelize = require('sequelize');
+let converter = require('json-2-csv');
 
 const formatDate = givenDate => moment(givenDate).format('YYYY-MM-DD HH:mm:ss');
 
@@ -69,13 +70,12 @@ exports.getSessionsPerPoint = (req, res, next) => {
       model: Charger,
       where: {
         idCharger: pointID,
+        createdAt: { [Op.between]: [periodFrom, periodTo] },
       },
     },
   })
     .then(charger => {
       pointOperator = charger.name;
-      console.log(charger.name);
-      console.log(requestTimestamp);
       return Transaction.findAndCountAll({
         // include: {
         //   model: Charger,
@@ -87,6 +87,7 @@ exports.getSessionsPerPoint = (req, res, next) => {
           {
             model: Charger,
             where: { idCharger: pointID },
+            createdAt: { [Op.between]: [periodFrom, periodTo] },
           },
           {
             model: Vehicle,
@@ -133,10 +134,24 @@ exports.getSessionsPerPoint = (req, res, next) => {
         Payment: paymentMethod,
         VehicleType: vehicleType,
       };
-      res.json(answer);
+      if (answer) {
+        if (req.query.format == null || req.query.format == 'json') {
+          res.json(answer);
+        } else if (req.query.format == 'csv') {
+          converter.json2csv(answer, (err, csv) => {
+            if (err) {
+              throw err;
+            }
+
+            // print CSV string
+            res.send(csv);
+          });
+        } else res.status(400).send('Bad request. Check the parameters.');
+      } else res.status(402).send('No data.');
     })
     .catch(err => {
       console.log(err);
+      res.status(402).send('No data.');
     });
   // res.send('<h1>Someone help1!</h1>');
 };
@@ -153,6 +168,7 @@ exports.getSessionsPerStation = (req, res, next) => {
   let SessionsSummaryList;
   NumberOfActivePoints = 0;
   let pointID = [];
+  let pointSessions = [];
   User.findOne({
     include: {
       model: Station,
@@ -184,12 +200,17 @@ exports.getSessionsPerStation = (req, res, next) => {
           TotalEnergyDelivered + rows[0].transactions[index].energy;
       }
       return Transaction.findAndCountAll({
-        include: {
-          model: Station,
-          where: {
-            idStation: stationID,
+        include: [
+          {
+            model: Station,
+            where: { idStation: stationID },
           },
-        },
+          {
+            model: Charger,
+          },
+        ],
+        Attributes: ['idCharger'],
+        group: ['idCharger'],
         // attributes: [
         //   [sequelize.fn('DISTINCT', sequelize.col('idCharger')), 'charger'],
         // ],
@@ -200,15 +221,19 @@ exports.getSessionsPerStation = (req, res, next) => {
     })
     // prepei na ta allaksw gia na ftiaksw thn lista pou zhtaeifdc
     .then(({ count, rows }) => {
-      NumberOfActivePoints = count;
+      NumberOfActivePoints = count.length;
+      // console.log(count);
+      // console.log('count:', NumberOfActivePoints);
       // console.log('active points:', NumberOfActivePoints);
       // console.log('sessions:', NumberOfChargingSessions);
-      console.log(rows);
-      // console.log(rows[0].station.idStation);
-      for (let index = 0; index < count; index++) {
-        pointID.push(rows[index].station.idStation);
+      // console.log(rows);
+      console.log('Edw eisai: ', rows[0].charger.idCharger);
+      for (let index = 0; index < NumberOfActivePoints; index++) {
+        pointID.push(rows[index].charger.idCharger);
+        // pointSessions.push(count[index].count);
       }
       // console.log(pointID);
+      //TODO POINT SESSIONS, ENERGY DELIVERED
       return Transaction.findAndCountAll({
         include: {
           model: Station,
@@ -255,6 +280,7 @@ exports.getSessionsPerEV = (req, res, next) => {
       model: Vehicle,
       where: {
         idVehicle: vehicleID,
+        createdAt: { [Op.between]: [periodFrom, periodTo] },
       },
     },
     col: 'idVehicle',
@@ -263,12 +289,16 @@ exports.getSessionsPerEV = (req, res, next) => {
   })
     .then(count => {
       // console.log(count);
+      if (count == 0) {
+        res.status(402).send('No data.');
+      }
       numberOfVisitedPoints = count;
       return Transaction.findAndCountAll({
         include: {
           model: Vehicle,
           where: {
             idVehicle: vehicleID,
+            createdAt: { [Op.between]: [periodFrom, periodTo] },
           },
         },
         createdAt: { [Op.between]: [periodFrom, periodTo] },
@@ -276,8 +306,6 @@ exports.getSessionsPerEV = (req, res, next) => {
     })
     .then(({ count, rows }) => {
       // console.log(rows[index].paymentMethod);
-      console.log(count);
-      console.log(rows);
       for (let index = 0; index < count; index++) {
         numberOfVehicleChargingSessions++;
         sessionIndex.push(index + 1);
@@ -299,6 +327,7 @@ exports.getSessionsPerEV = (req, res, next) => {
             model: Transaction,
             where: {
               idTransaction: rows[index].idTransaction,
+              createdAt: { [Op.between]: [periodFrom, periodTo] },
             },
           },
           createdAt: { [Op.between]: [periodFrom, periodTo] },
@@ -331,13 +360,29 @@ exports.getSessionsPerEV = (req, res, next) => {
                 CostPerKWh: costPerKWh,
                 SessionCost: sessionCost,
               };
-              res.json(answer);
+              if (answer) {
+                if (req.query.format == null || req.query.format == 'json') {
+                  res.json(answer);
+                } else if (req.query.format == 'csv') {
+                  converter.json2csv(answer, (err, csv) => {
+                    if (err) {
+                      throw err;
+                    }
+
+                    // print CSV string
+                    res.send(csv);
+                  });
+                  // } else res.send('<h1>Put right format</h1>');
+                } else
+                  res.status(400).send('Bad request. Check the parameters');
+              } else res.status(402).send('No data.');
             }
           });
       }
     })
     .catch(err => {
       console.log(err);
+      res.status(402).send('No data.');
     });
   // res.send('<h1>Someone help1 for 2C endpoint!</h1>');
 };
@@ -359,6 +404,7 @@ exports.getSessionsPerProvider = (req, res, next) => {
   Provider.findOne({
     where: {
       idProvider: providerID,
+      createdAt: { [Op.between]: [periodFrom, periodTo] },
     },
   })
     .then(provider => {
@@ -369,6 +415,7 @@ exports.getSessionsPerProvider = (req, res, next) => {
           model: Provider,
           where: {
             idProvider: providerID,
+            createdAt: { [Op.between]: [periodFrom, periodTo] },
           },
         },
         createdAt: { [Op.between]: [periodFrom, periodTo] },
@@ -377,7 +424,6 @@ exports.getSessionsPerProvider = (req, res, next) => {
     .then(({ count, rows }) => {
       // console.log(count);
       for (let index = 0; index < count; index++) {
-        console.log('time:', rows[index].time);
         stationID.push(rows[index].idStation);
         sessionID.push(rows[index].idTransaction);
         vehicleID.push(rows[index].idVehicle);
@@ -396,14 +442,6 @@ exports.getSessionsPerProvider = (req, res, next) => {
         sessionCost.push(rows[index].amount);
         totalCost = totalCost + rows[index].amount;
       }
-      // console.log(rows[0]);
-      // console.log(stationID);
-      // console.log(sessionID);
-      // console.log(vehicleID);
-      // console.log(finishedOn);
-      // console.log(energyDelivered);
-      // console.log(costPerKWh);
-      // console.log(totalCost);
       let answer = {
         ProviderID: providerID,
         ProviderName: providerName,
@@ -417,178 +455,23 @@ exports.getSessionsPerProvider = (req, res, next) => {
         SessionCost: sessionCost,
         TotalCost: totalCost,
       };
-      res.json(answer);
+      if (answer) {
+        if (req.query.format == null || req.query.format == 'json') {
+          res.json(answer);
+        } else if (req.query.format == 'csv') {
+          converter.json2csv(answer, (err, csv) => {
+            if (err) {
+              throw err;
+            }
+            // print CSV string
+            res.send(csv);
+          });
+        } else res.status(400).send('Bad request. Check the parameters');
+      } else res.status(402).send('No data.');
     })
     .catch(err => {
       console.log(err);
+      res.status(402).send('No data.');
     });
   // res.send('<h1>Someone help1 for 2d endpoint!</h1>');
 };
-
-// exports.getSessionsPerStation = (req, res, next) => {
-//   let stationID = req.param('stationID');
-//   let periodFrom = req.param('yyyymmdd_from');
-//   let periodTo = req.param('yyyymmdd_to');
-//   let operator;
-//   let requestTimestamp = new Date().today() + ' ' + new Date().timeNow();
-//   let TotalEnergyDelivered = 0;
-//   let NumberOfChargingSessions = 0;
-//   let SessionsSummaryList;
-//   NumberOfActivePoints = 0;
-//   let pointID = [];
-//   User.findOne({
-//     include: {
-//       model: Station,
-//       where: {
-//         idStation: stationID,
-//       },
-//     },
-//   })
-//     .then(station => {
-//       operator = station.username;
-//       console.log(operator);
-//       // return Transaction.findOne({
-//       return Station.findAndCountAll({
-//         include: {
-//           // model: Station,
-//           model: Transaction,
-//           where: {
-//             idStation: stationID,
-//             createdAt: { [Op.between]: [periodFrom, periodTo] },
-//           },
-//         },
-//       });
-//     })
-//     .then(({ count, rows }) => {
-//       NumberOfChargingSessions = count;
-//       console.log('eimai sto proigoumeno');
-//       for (let index = 0; index < count; index++) {
-//         TotalEnergyDelivered =
-//           TotalEnergyDelivered + rows[0].transactions[index].energy;
-//         // console.log(
-//         //   `Energy of transaction ${index}`,
-//         //   rows[0].transactions[index].energy
-//         // );}
-//       }
-//       return Transaction.Findcount({
-//         include: {
-//           model: Station,
-//           where: {
-//             idStation: stationID,
-//           },
-//         },
-//         col: 'idCharger',
-//         createdAt: { [Op.between]: [periodFrom, periodTo] },
-//         distinct: true,
-//       });
-//     })
-//     // prepei na ta allaksw gia na ftiaksw thn lista pou zhtaeifdc
-//     .then(count => {
-//       NumberOfActivePoints = count;
-//       for (let index = 0; index < count; index++) {
-//         // poinntID.push(count.)
-//       }
-//       return Transaction.findAndCountAll({
-//         include: {
-//           model: Station,
-//           where: {
-//             idStation: stationID,
-//           },
-//         },
-//         createdAt: { [Op.between]: [periodFrom, periodTo] },
-//       });
-//     })
-//     .then(({ count, rows }) => {
-//       SessionsSummaryList = JSON.stringify(rows);
-//       console.log(SessionsSummaryList);
-//       // res.json(rows);
-//     })
-
-//     .catch(err => {
-//       console.log(err);
-//       // console.log('User not found or an error occured');
-//     });
-//   res.send('<h1>Someone help2!</h1>');
-// };
-
-// exports.getSessionsPerPoint = (req, res, next) => {
-//   let pointID = req.param('pointID');
-//   let periodFrom = req.param('yyyymmdd_from');
-//   let periodTo = req.param('yyyymmdd_to');
-//   let requestTimestamp = new Date().today() + ' ' + new Date().timeNow();
-//   let pointOperator;
-//   let numberOfChargingSessions;
-//   let sessionIndex = [];
-//   let sessionID = [];
-//   let startedOn = [];
-//   let finishedOn = [];
-//   let protocol = [];
-//   let energyDelivered = [];
-//   let paymentMethod = [];
-//   let vehicleType = [];
-//   //   finding point operator
-//   Station.findOne({
-//     include: {
-//       model: Charger,
-//       where: {
-//         idCharger: pointID,
-//       },
-//     },
-//   })
-//     .then(charger => {
-//       pointOperator = charger.name;
-//       console.log(charger.name);
-//       console.log(requestTimestamp);
-//       return Transaction.findAndCountAll({
-//         include: {
-//           model: Charger,
-//           where: {
-//             idCharger: pointID,
-//           },
-//         },
-//         createdAt: { [Op.between]: [periodFrom, periodTo] },
-//       });
-//     })
-//     .then(({ count, rows }) => {
-//       numberOfChargingSessions = count;
-//       for (let index = 0; index < count; index++) {
-//         sessionIndex.push(index + 1);
-//         sessionID.push(rows[index].idTransaction);
-//         finishedOn.push(formatDate(rows[index].createdAt));
-//         //time
-//         let integerPart = parseInt((rows[index].time + '').split('.')[0]);
-//         let decimalPart = parseInt((rows[index].time + '').split('.')[1]);
-//         var d = rows[index].createdAt;
-//         d.setMinutes(d.getMinutes() - integerPart);
-//         d.setSeconds(d.getSeconds() - decimalPart);
-//         formattedd = formatDate(d);
-//         startedOn.push(formattedd); //adding it to the list
-//         //rest
-//         protocol.push(rows[index].charger.type);
-//         energyDelivered.push(rows[index].energy);
-//         paymentMethod.push(rows[index].paymentMethod);
-//       }
-//       //TODO vehicle type
-//       let answer = {
-//         Point: pointID,
-//         PointOperator: pointOperator,
-//         RequestTimestamp: requestTimestamp,
-//         PeriodFrom: periodFrom,
-//         PeriodTo: periodTo,
-//         NumberOfChargingSessions: numberOfChargingSessions,
-//         SessionIndex: sessionIndex,
-//         SessionID: sessionID,
-//         StartedOn: startedOn,
-//         FinishedOn: finishedOn,
-//         Protocol: protocol,
-//         EnergyDelivered: energyDelivered,
-//         Payment: paymentMethod,
-//         VehicleType: vehicleType,
-//       };
-//       res.json(answer);
-//     })
-//     .catch(err => {
-//       console.log(err);
-//     });
-//   // res.send('<h1>Someone help1!</h1>');
-// };
