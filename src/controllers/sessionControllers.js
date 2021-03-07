@@ -53,6 +53,7 @@ exports.getSessionsPerPoint = (req, res, next) => {
   let pointID = req.param('pointID');
   let periodFrom = req.param('yyyymmdd_from');
   let periodTo = req.param('yyyymmdd_to');
+  console.log(periodFrom);
   let requestTimestamp = new Date().today() + ' ' + new Date().timeNow();
   let pointOperator;
   let numberOfChargingSessions;
@@ -310,6 +311,7 @@ exports.getSessionsPerEV = (req, res, next) => {
         numberOfVehicleChargingSessions++;
         sessionIndex.push(index + 1);
         sessionID.push(rows[index].idTransaction);
+        totalEnergyConsumed = totalEnergyConsumed + rows[index].energy;
         //time
         let integerPart = parseInt((rows[index].time + '').split('.')[0]);
         let decimalPart = parseInt((rows[index].time + '').split('.')[1]);
@@ -319,7 +321,7 @@ exports.getSessionsPerEV = (req, res, next) => {
         formattedd = formatDate(d);
         startedOn.push(formattedd);
         //rest
-        finishedOn.push(rows[index].createdAt);
+        finishedOn.push(formatDate(rows[index].createdAt));
         energyDelivered.push(rows[index].energy);
         sessionCost.push(rows[index].amount);
         Provider.findAndCountAll({
