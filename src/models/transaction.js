@@ -1,5 +1,6 @@
 const Sequelize = require('sequelize');
 // const { SET_DEFERRED } = require('sequelize/types/lib/deferrable');
+const moment = require('moment');
 
 const sequelize = require('../util/database');
 
@@ -18,9 +19,13 @@ const Transaction = sequelize.define('transaction', {
     type: Sequelize.FLOAT,
     allowNull: false,
   },
+  energy: {
+    type: Sequelize.FLOAT,
+    allowNull: false,
+  },
   isInOffers: Sequelize.BOOLEAN,
   time: {
-    type: Sequelize.TIME,
+    type: Sequelize.FLOAT,
     allowNull: false,
   },
 });

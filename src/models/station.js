@@ -42,10 +42,10 @@ const Station = sequelize.define('station', {
     type: Sequelize.STRING,
     allowNull: false,
   },
-  idStationOperator: {
-    type: Sequelize.INTEGER,
-    allowNull: false,
-  },
+  // idStationOperator: {
+  //   type: Sequelize.INTEGER,
+  //   allowNull: false,
+  // },
 });
 
 module.exports = Station;

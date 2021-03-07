@@ -20,10 +20,10 @@ const Charger = sequelize.define('charger', {
   },
   isBusy: Sequelize.BOOLEAN,
   isFunctioning: Sequelize.BOOLEAN,
-  idChargerOperator: {
-    type: Sequelize.INTEGER,
-    allowNull: false,
-  },
+  // idChargerOperator: {
+  //   type: Sequelize.INTEGER,
+  //   allowNull: false,
+  // },
 });
 
 module.exports = Charger;

@@ -1,16 +1,16 @@
 // load dependencies
 const express = require('express');
 const bodyParser = require('body-parser');
-// const formidable = require('formidable');
 const multer = require('multer');
+// const date = require('moment');
 
 global.__basedir = __dirname;
-//for the database
-//this is useless
-//const db = require('./util/database');
 
 // load routes
 const adminRoutes = require('./routes/adminRoutes');
+const sessionRoutes = require('./routes/sessionRoutes');
+
+//Sequelize
 const sequelize = require('./util/database');
 
 // import database models
@@ -18,18 +18,16 @@ const Charger = require('./models/charger');
 const Provider = require('./models/provider');
 const ProviderSuppliesStation = require('./models/providerSuppliesStation');
 const Station = require('./models/station');
-const StationHostCharger = require('./models/stationHostCharger');
-const StationOffersDiscountCharger = require('./models/stationOffersDiscountCharger');
 const Transaction = require('./models/transaction');
 const User = require('./models/user');
-const UserHasVehicle = require('./models/userHasVehicle');
 const Vehicle = require('./models/vehicle');
-const VehicleChargedTransaction = require('./models/vehicleChargedTransaction');
+// const userIsStationOperator = require('./models/userIsStationOperator');
+// const VehicleChargedTransaction = require('./models/vehicleChargedTransaction');
+// const StationHostCharger = require('./models/stationHostCharger');
+// const StationOffersDiscountCharger = require('./models/stationOffersDiscountCharger');
+// const UserHasVehicle = require('./models/userHasVehicle');
 
 const app = express();
-
-//maybe for future use
-//db.execute('SELECT * FROM users').then(result => {console.log(result);}).catch(err => {console.log(err);});
 
 //Midleware for parsing
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -46,7 +44,7 @@ app.use((req, res, next) => {
   next();
 });
 
-//routes
+// TODO ROUTES
 // basic endpoint app.use('/evcharge/api)
 app.use('/pog', (req, res, next) => {
   console.log('In the starting point!');
@@ -55,9 +53,10 @@ app.use('/pog', (req, res, next) => {
 });
 //admin routes
 app.use('/evcharge/api/admin', adminRoutes);
+//session routes
+app.use('/evcharge/api', sessionRoutes);
 
-//for providerSuppliesStation.js
-
+// provider suppliers M:N
 Provider.belongsToMany(Station, {
   through: ProviderSuppliesStation,
   foreignKey: 'idStation',
@@ -71,35 +70,33 @@ Station.belongsToMany(Provider, {
   onDelete: 'CASCADE',
 });
 
-//for stationHostCharger.js
-Station.belongsToMany(Charger, {
-  through: StationHostCharger,
-  foreignKey: 'idCharger',
+// Station - Chargers 1: M
+Station.hasMany(Charger, {
+  foreignKey: 'idStation',
   constraints: true,
   onDelete: 'CASCADE',
 });
-Charger.belongsToMany(Station, {
-  through: StationHostCharger,
+Charger.belongsTo(Station, {
   foreignKey: 'idStation',
   constraints: true,
   onDelete: 'CASCADE',
 });
 
-//for stationOffersDiscountCharger.js
-Station.belongsToMany(Charger, {
-  through: StationOffersDiscountCharger,
-  foreignKey: 'idCharger',
-  constraints: true,
-  onDelete: 'CASCADE',
-});
-Charger.belongsToMany(Station, {
-  through: StationOffersDiscountCharger,
-  foreignKey: 'idStation',
-  constraints: true,
-  onDelete: 'CASCADE',
-});
+//for stationOffersDiscountCharger.js Station - Discounts M:N
+// Station.belongsToMany(Charger, {
+//   through: StationOffersDiscountCharger,
+//   foreignKey: 'idCharger',
+//   constraints: true,
+//   onDelete: 'CASCADE',
+// });
+// Charger.belongsToMany(Station, {
+//   through: StationOffersDiscountCharger,
+//   foreignKey: 'idStation',
+//   constraints: true,
+//   onDelete: 'CASCADE',
+// });
 
-//for transaction.js
+//for transaction.js  Anything else - Transaction 1 - M
 User.hasMany(Transaction, {
   foreignKey: 'idUser',
   constraints: true,
@@ -110,7 +107,18 @@ Charger.hasMany(Transaction, {
   constraints: true,
   onDelete: 'CASCADE',
 });
+Transaction.belongsTo(Charger, {
+  foreignKey: 'idCharger',
+  constraints: true,
+  onDelete: 'CASCADE',
+});
+
 Station.hasMany(Transaction, {
+  foreignKey: 'idStation',
+  constraints: true,
+  onDelete: 'CASCADE',
+});
+Transaction.belongsTo(Station, {
   foreignKey: 'idStation',
   constraints: true,
   onDelete: 'CASCADE',
@@ -120,37 +128,46 @@ Provider.hasMany(Transaction, {
   constraints: true,
   onDelete: 'CASCADE',
 });
-
-//for userHasVehicle.js
-User.belongsToMany(Vehicle, {
-  through: UserHasVehicle,
+Transaction.belongsTo(Provider, {
+  foreignKey: 'idProvider',
+  constraints: true,
+  onDelete: 'CASCADE',
+});
+Vehicle.hasMany(Transaction, {
   foreignKey: 'idVehicle',
   constraints: true,
   onDelete: 'CASCADE',
 });
-// Vehicle.hasOne(User, {
-//   through: UserHasVehicle,
-//   foreignKey: 'idUser',
-//   constraints: true,
-//   onDelete: 'CASCADE',
-// });
-
-//for vehicleChargedTransaction.js
-// Vehicle.belongsToMany(Transaction, {
-//   through: VehicleChargedTransaction,
-//   foreignKey: 'idTransaction',
-//   constraints: true,
-//   onDelete: 'CASCADE',
-// });
-Transaction.hasOne(Vehicle, {
-  through: VehicleChargedTransaction,
+Transaction.belongsTo(Vehicle, {
   foreignKey: 'idVehicle',
   constraints: true,
   onDelete: 'CASCADE',
 });
 
-//one of these 2 should work
-//uncomment one of 2
+// User - Vehicle 1 - M
+User.hasMany(Vehicle, {
+  foreignKey: 'idUser',
+  constraints: true,
+  onDelete: 'CASCADE',
+});
+Vehicle.belongsTo(User, {
+  foreignKey: 'idUser',
+  constraints: true,
+  onDelete: 'CASCADE',
+});
+// User - Station 1 - M
+User.hasMany(Station, {
+  foreignKey: 'idStationOperator',
+  constraints: true,
+  onDelete: 'CASCADE',
+});
+Station.belongsTo(User, {
+  foreignKey: 'idStationOperator',
+  constraints: true,
+  onDelete: 'CASCADE',
+});
+
+console.log('we are in');
 sequelize
   .sync({ force: false }) // if i have this on true it drops all tables when it starts
   .then(result => {
@@ -172,3 +189,57 @@ sequelize
 
 //we maybe need to erase this if we add one of 2 above
 //app.listen(8765);
+
+//for userHasVehicle.js
+// User.belongsToMany(Vehicle, {
+//   through: UserHasVehicle,
+//   foreignKey: 'idVehicle',
+//   constraints: true,
+//   onDelete: 'CASCADE',
+// });
+
+// User.hasMany(Vehicle, {
+//   through: UserHasVehicle,
+//   foreignKey: 'idVehicle',
+//   constraints: true,
+//   onDelete: 'CASCADE',
+// });
+// Vehicle.hasOne(User, {
+//   through: UserHasVehicle,
+//   foreignKey: 'idUser',
+//   constraints: true,
+//   onDelete: 'CASCADE',
+// });
+
+// Vehicle.hasMany(Transaction, {
+//   through: VehicleChargedTransaction,
+//   foreignKey: 'idVehicle',
+//   constraints: true,
+//   onDelete: 'CASCADE',
+// });
+
+// Transaction.belongsTo(Vehicle, {
+//   foreignKey: 'idVehicle',
+//   constraints: true,
+//   onDelete: 'CASCADE',
+// });
+
+//for vehicleChargedTransaction.js
+// Vehicle.belongsToMany(Transaction, {
+//   through: VehicleChargedTransaction,
+//   foreignKey: 'idTransaction',
+//   constraints: true,
+//   onDelete: 'CASCADE',
+// });
+// Transaction.hasOne(Vehicle, {
+//   through: VehicleChargedTransaction,
+//   foreignKey: 'idVehicle',
+//   constraints: true,
+//   onDelete: 'CASCADE',
+// });
+
+//maybe for future use
+//db.execute('SELECT * FROM users').then(result => {console.log(result);}).catch(err => {console.log(err);});
+//for the database
+//this is useless
+//const db = require('./util/database');
