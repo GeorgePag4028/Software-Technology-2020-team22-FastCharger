@@ -1,6 +1,6 @@
 const express = require('express');
 const adminController = require('../controllers/adminControllers');
-
+const isAuth = require('../middleware/is-auth');
 const router = express.Router();
 
 const upload = require('../middleware/upload');
@@ -12,7 +12,9 @@ router.post('/usermod/:username/:password', adminController.postUser);
 router.post('/usermod', adminController.postUser);
 
 // // GET {baseURL}/admin/users/:username
-router.get('/users/:username', adminController.getUser);
+// router.get('/users/:username',  adminController.getUser);
+// with auth
+router.get('/users/:username', isAuth, adminController.getUser);
 
 // // POST {baseURL}/admin/system/sessionsupd
 // router.post('/system/sessionsupd', adminController.postFileUpload);

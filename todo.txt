@@ -1,7 +1,5 @@
-1) csv / json format. To deutero endpoint na to kanoyme kai se csv morfi. Genika na doume me ti queries dialegetai poia morfi.
-2) Authentication
-3) Βοηθητικά endpoints
-4) 2b 
-5) Csc file updload
-6) kapoia morfi validation sto input? 
-7) cli
+1) Authentication. Put the middleware in all routes expect the helping endpoints.
+2) Logout
+3) 2b 
+4) kapoia morfi validation sto input? 
+5) cli

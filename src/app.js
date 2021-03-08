@@ -9,6 +9,7 @@ global.__basedir = __dirname;
 // load routes
 const adminRoutes = require('./routes/adminRoutes');
 const sessionRoutes = require('./routes/sessionRoutes');
+const authRoutes = require('./routes/authRoutes');
 
 //Sequelize
 const sequelize = require('./util/database');
@@ -51,6 +52,9 @@ app.use('/pog', (req, res, next) => {
   res.send('<h1>Hello From fuck me up!</h1>');
   next();
 });
+
+// login/logout routes
+app.use('/evcharge/api', authRoutes);
 //admin routes
 app.use('/evcharge/api/admin', adminRoutes);
 //session routes

@@ -71,6 +71,7 @@ exports.getUser = (req, res, next) => {
       }
     })
     .catch(err => {
+      console.log('I am here');
       console.log(err);
     });
 
