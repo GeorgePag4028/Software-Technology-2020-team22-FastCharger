@@ -468,7 +468,7 @@ exports.getSessionsPerProvider = (req, res, next) => {
             // print CSV string
             res.send(csv);
           });
-        } else res.status(400).send('Bad request. Check the parameters');
+        } else;
       } else res.status(402).send('No data.');
     })
     .catch(err => {

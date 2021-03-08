@@ -22,6 +22,7 @@ const Station = require('./models/station');
 const Transaction = require('./models/transaction');
 const User = require('./models/user');
 const Vehicle = require('./models/vehicle');
+const TokenBlacklist = require('./models/tokenBlacklist');
 // const userIsStationOperator = require('./models/userIsStationOperator');
 // const VehicleChargedTransaction = require('./models/vehicleChargedTransaction');
 // const StationHostCharger = require('./models/stationHostCharger');

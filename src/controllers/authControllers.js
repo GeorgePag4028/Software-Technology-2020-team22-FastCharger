@@ -1,6 +1,8 @@
 const User = require('../models/user');
 const jwt = require('jsonwebtoken');
+const TokenBlacklist = require('../models/tokenBlacklist');
 
+//localhost:8765/evcharge/api/login
 exports.postLogin = (req, res, next) => {
   const email = req.body.email;
   const password = req.body.password;
@@ -45,4 +47,25 @@ exports.postLogin = (req, res, next) => {
     });
 };
 
-exports.postLogout = (req, res, next) => {};
+//localhost:8765/evcharge/api/logout
+exports.postLogout = (req, res, next) => {
+  const token = req.get('XOBSERVATORY-AUTH');
+  if (!token) {
+    const error = new Error(
+      'Not authenticated. You have to login to be able to logout!'
+    );
+    error.statusCode = 401;
+    res.status(error.statusCode).send(error.message);
+    throw error;
+  }
+  TokenBlacklist.create({
+    token: token,
+  })
+    .then(result => {
+      console.log('Token Added to Blacklist');
+      res.status(200).send();
+    })
+    .catch(err => {
+      console.log(err);
+    });
+};
