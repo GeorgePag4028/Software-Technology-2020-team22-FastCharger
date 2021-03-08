@@ -1,5 +1,9 @@
 1) Authentication. Put the middleware in all routes expect the helping endpoints.
-2) Logout
-3) 2b 
-4) kapoia morfi validation sto input? 
+   O user να μπορει να δει μονο το αμαξι του;
+   O admin κανει τα παντα.
+   Ο stationadmin να μπορει να δει τα παντα εκτος απο admin.
+2) kapoia morfi validation sto input?
+	Na μην μπορουν να προστεθουν χρηστες με email που χρησιμοποειται ηδη. 
+3) Logout. Blacklist ta tokens
+4) 2b ? 
 5) cli

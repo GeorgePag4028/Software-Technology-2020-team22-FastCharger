@@ -33,7 +33,7 @@ exports.postLogin = (req, res, next) => {
         'secretkeythatonlytheserverhas',
         { expiresIn: '1h' } //the token can be copied from the browser data and be used forever. So, we make it  to expireevery one hour.
       );
-      res.status(200).json({ token: token, username: loadedUser.username });
+      res.status(200).json({ token: token });
     })
     .catch(err => {
       if (!err.statusCode) {
@@ -44,3 +44,5 @@ exports.postLogin = (req, res, next) => {
       res.status(err.statusCode).send(err.message);
     });
 };
+
+exports.postLogout = (req, res, next) => {};

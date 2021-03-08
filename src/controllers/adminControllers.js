@@ -7,7 +7,6 @@ const Transaction = require('../models/transaction');
 //Υποστηρίζει τη μέθοδο POST για την προσθήκη νέου χρήστη ή την αλλαγή password αν ο χρήστης υπάρχει ήδη.
 //url: localhost:8765/evcharge/api/admin/usermod/:username/:password
 exports.postUser = (req, res, next) => {
-  console.log('We are in create/update User route');
   // const username = req.body.username;
   let username = req.param('username');
   let password = req.param('password');
@@ -22,27 +21,40 @@ exports.postUser = (req, res, next) => {
         })
         .then(result => {
           console.log('changed password');
+          res.status(200).send('Updated Password.');
         })
         .catch(err => {
           console.log(err);
         });
     } else {
-      User.create({
-        rank: rank,
-        username: username,
-        password: password,
-        email: email,
-      })
-        .then(result => {
-          console.log(result);
+      User.findOne({ where: { email: email } })
+        .then(user => {
+          if (user) {
+            const error = new Error('A user with this e-mail already exists.');
+            error.statusCode = 400;
+            res.status(error.statusCode).send(error.message);
+            throw error;
+          } else {
+            User.create({
+              rank: rank,
+              username: username,
+              password: password,
+              email: email,
+            })
+              .then(result => {
+                console.log('Created User');
+                res.status(200).send('User Created.');
+              })
+              .catch(err => {
+                console.log(err);
+              });
+          }
         })
         .catch(err => {
           console.log(err);
         });
     }
   });
-  // apanthsh pou gurizei
-  res.send('<h1>Someone help!</h1>');
 };
 
 //Υποστηρίζει τη μέθοδο GET για την ανάγνωση των στοιχείων του συγκεκριμένου χρήστη
@@ -150,3 +162,39 @@ exports.getResetSessions = (req, res, next) => {
 
 //   console.log('We are in get user  route');
 // };
+
+// exports.postUser = (req, res, next) => {
+//   console.log('We are in create/update User route');
+//   // const username = req.body.username;
+//   let username = req.param('username');
+//   let password = req.param('password');
+//   // const password = req.body.password;
+//   const email = req.body.email;
+//   const rank = req.body.rank;
+//   User.findOne({ where: { username: username } }).then(user => {
+//     if (user) {
+//       user
+//         .update({
+//           password: password,
+//         })
+//         .then(result => {
+//           console.log('changed password');
+//         })
+//         .catch(err => {
+//           console.log(err);
+//         });
+//     } else {
+//       User.create({
+//         rank: rank,
+//         username: username,
+//         password: password,
+//         email: email,
+//       })
+//         .then(result => {
+//           console.log(result);
+//         })
+//         .catch(err => {
+//           console.log(err);
+//         });
+//     }
+//   });
