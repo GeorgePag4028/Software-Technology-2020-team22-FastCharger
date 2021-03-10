@@ -1,0 +1,12 @@
+1) Done: Authentication. Put the middleware in all routes expect the helping endpoints.
+   O user να μπορει να δει μονο το αμαξι του;
+   Done: O admin κανει τα παντα.
+   Done: Ο stationadmin να μπορει να δει τα παντα εκτος απο admin.
+2) kapoia morfi validation sto input?
+	Done: Na μην μπορουν να προστεθουν χρηστες με email που χρησιμοποειται ηδη. 
+4) 2b ? 
+5) cli
+	i) admin validation
+	ii) requeried options for format
+	iii) options in the NON-admin call
+6) Test the 4 session endpoints with lots of data. 

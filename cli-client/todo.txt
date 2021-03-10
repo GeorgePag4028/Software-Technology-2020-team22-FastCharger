@@ -1,0 +1,3 @@
+1) admin validation
+2) requeried options for format
+3) options in the NON-admin call
